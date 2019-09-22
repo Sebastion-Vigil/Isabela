@@ -1,0 +1,30 @@
+
+.tile {
+  height: 8.5%;
+  width: 10.5%;
+  border: .5px solid silver;
+  position: absolute;
+}
+
+/* 
+gonna change ^^ leaving commented for now 
+for future reference
+
+so we gotta lotta tiles here
+24 all in all
+each with a unique background image
+we gotta do this programmatically
+(this program doesn't like spaghetti)
+so I need to store all 24 image urls somewhere
+for later access by a function which will
+generate 24 of these tiles, each with their
+own unique image id AND unique x/y coordinates,
+since there position is absolute and they will
+need to be moved.
+
+...hmmm...methinks this function will need 
+Satan's Little Helper...
+
+...eyes open never shut again...
+
+*/

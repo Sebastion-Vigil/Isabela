@@ -1,0 +1,10 @@
+
+.props-window {
+    width: 15vw;
+    height: 33vh;
+    background-color: black;
+    color: white;
+    position: absolute;
+    left: 5vw;
+    top: 5vh;
+}

@@ -1,0 +1,11 @@
+
+.game {
+    width: 99.5%;
+    height: 99.5%;
+    background-color: #666666;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2% 2% 2% 2%/4% 4% 4% 4%;
+}

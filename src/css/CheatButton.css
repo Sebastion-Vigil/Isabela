@@ -1,0 +1,26 @@
+.cheat-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: darkred;
+    position: absolute; 
+    left: 2vw;
+    top: 20.5vh;
+    padding: .5%;
+    border: 2px solid red;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: .5;
+}
+
+.cheat-button:active {
+  background-color: black;
+  border: 2px solid white;
+}
+
+.cheat-button:hover {
+  opacity: 1;
+}

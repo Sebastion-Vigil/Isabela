@@ -1,0 +1,22 @@
+
+.cheat-screen {
+    width: 51vw;
+    height: 69.5vh;
+    border: 2px solid white;
+    border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
+    background-image: url('../images/isaAnswer.png');
+    background-size: 100% 100%;
+    opacity: .1;
+    color: white;
+}
+
+.screen {
+   width: 51vw;
+   height: 69.5vh;
+   border: 2px solid white;
+   border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
+   /* background-image: url('../images/laTuti.jpeg');
+   background-size: 100% 100%;
+   opacity: .1; */
+   color: white;
+}
