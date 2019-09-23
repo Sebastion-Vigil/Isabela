@@ -3,6 +3,7 @@
     width: 51vw;
     height: 65vh;
     min-width: 320px;
+    min-height: 320px;
     border: 2px solid white;
     border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
     display: flex;
@@ -35,6 +36,7 @@
    width: 51vw;
    height: 65vh;
    min-width: 320px;
+   min-height: 320px;
    border: 2px solid white;
    border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
    background-color: #0d0d0d;

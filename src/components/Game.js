@@ -67,8 +67,8 @@ class Game extends React.Component {
       randomIs.splice(rIndex, 1);
     } // come back and adjust final style later
     const finalStyle = {
-      left: "50.41vw",
-      top: "89.7vh",
+      left: "50.35vw",
+      top: "88.6vh",
       backgroundImage: "url(" + imgs[randomIs[0]] + ")",
       backgroundSize: "100% 100%"
     };
