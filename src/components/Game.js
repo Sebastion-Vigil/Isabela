@@ -37,6 +37,7 @@ class Game extends React.Component {
   toggleHelpButton = () => {
     const toggled = !this.state.cheat;
     console.log("state from toggle: ", this.state);
+    console.log("cursor props: ", this.props);
     this.setState({
       cheat: toggled
     });

@@ -12,6 +12,15 @@
     border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
 }
 
+@media only screen and (max-width: 350px) {
+  .tray {
+    width: 99.9vw;
+  }
+  .tray-row {
+    width: 99.9vw;
+  }
+}
+
 .tray-row {
   display: flex;
   justify-content: center;
