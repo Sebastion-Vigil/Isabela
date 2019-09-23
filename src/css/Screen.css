@@ -89,4 +89,7 @@
     .screen {
         width: 100vw; 
     }
+    .solution-pad {
+        width: 77vw;
+    }
 }

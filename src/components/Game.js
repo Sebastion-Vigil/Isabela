@@ -30,7 +30,9 @@ class Game extends React.Component {
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
-      tileImages: [isa1, isa2, isa3, isa4, isa5, isa6]
+      tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
+      windowWidth: 0,
+      windowHeight: 0
     };
   }
 
@@ -82,11 +84,24 @@ class Game extends React.Component {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
+  updateWindowDimensions = () => {
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight
+    });
+  }
+
   componentWillMount() {
     this.randomTileGenerator();
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
     console.log("cursor props from componentDidMount(): ", this.props);
     this.setState({
       tileTimer: setInterval(() => {

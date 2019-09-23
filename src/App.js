@@ -42,7 +42,7 @@ class App extends React.Component {
             7: flower8,
             8: flower9
           }}
-          how={150}
+          how={250}
           time={20}
           size={"50px"}
           background={"pink"}
@@ -64,8 +64,8 @@ class App extends React.Component {
               7: heart8,
               8: heart9
             }}
-            how={100}
-            time={10}
+            how={125}
+            time={20}
             size={"25px"}
             background={"magenta"}
           />
