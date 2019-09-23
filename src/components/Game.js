@@ -46,11 +46,14 @@ class Game extends React.Component {
   };
 
   randomTileGenerator = () => {
-    const width = 10.5; // tile width
-    const height = 8.5; // tile height
-    const xSpace = 1.45; // horizontal space between tiles
-    const ySpace = 2.3; // vertical space between tiles
-    let l = 38.51;
+    const ww = this.state.windowWidth; // these are px 
+    console.log("ww: ", ww);
+    console.log("typeof ww: ", typeof ww);
+    const tileW = 11; // tile width
+    const tileH = 8.5; // tile height
+    const xSpace = 2; // horizontal space between tiles
+    const ySpace = 2.3 // vertical space between tiles
+    let l = 37.9; // let l = 10;
     let t = 67;
     const randomIs = [0, 1, 2, 3, 4, 5];
     const randomizedTileStyles = [];
@@ -58,18 +61,22 @@ class Game extends React.Component {
     while (randomIs.length > 1) {
       let rIndex = this.randTileIndex(0, randomIs.length - 1);
       let s = {
+        width: tileW.toString() + 'vw',
+        height: tileH.toString() + 'vh',
         left: l.toString() + "vw",
         top: t.toString() + "vh",
         backgroundImage: "url(" + imgs[randomIs[rIndex]] + ")",
         backgroundSize: "100% 100%"
       };
       randomizedTileStyles.push(s);
-      l = randomizedTileStyles.length % 2 === 0 ? 38.4 : l + width + xSpace;
-      t = randomizedTileStyles.length % 2 === 0 ? t + height + ySpace : t;
+      l = randomizedTileStyles.length % 2 === 0 ? 37.9 : l + tileW + xSpace;
+      t = randomizedTileStyles.length % 2 === 0 ? t + tileH + ySpace : t;
       randomIs.splice(rIndex, 1);
     } // come back and adjust final style later
     const finalStyle = {
-      left: "50.35vw",
+      width: tileW.toString() + 'vw',
+      height: tileH.toString() + 'vh',
+      left: "50.9vw",
       top: "88.6vh",
       backgroundImage: "url(" + imgs[randomIs[0]] + ")",
       backgroundSize: "100% 100%"
@@ -80,19 +87,21 @@ class Game extends React.Component {
     });
   };
 
+  componentDidUpdate() {
+    console.log("componentDidUpdate()");
+  }
+
   randTileIndex = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   updateWindowDimensions = () => {
+    console.log("windowWidth: ", window.innerWidth);
+    console.log("windowHeight: ", window.innerHeight);
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight
     });
-  }
-
-  componentWillMount() {
-    this.randomTileGenerator();
   }
 
   componentWillUnmount() {
@@ -100,6 +109,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    this.randomTileGenerator();
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     console.log("cursor props from componentDidMount(): ", this.props);

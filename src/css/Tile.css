@@ -1,16 +1,8 @@
 
 .tile {
-  height: 8.5%;
-  width: 11%;
   border: .5px solid silver;
   position: absolute;
   z-index: 1;
-}
-
-@media only screen and (max-width: 800px) {
-  .tile {
-    width: 40vw;
-  }
 }
 
 

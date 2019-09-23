@@ -7,7 +7,6 @@ class Tile extends React.Component {
   render() {
     return <div 
       className="tile"
-      id={"s" + parseInt(this.props.style.left) + parseInt(this.props.style.top)}
       style={this.props.style}
       onMouseDown={this.props.startDrag}
       onMouseUp={this.props.endDrag}
