@@ -64,8 +64,8 @@ class App extends React.Component {
               7: heart8,
               8: heart9
             }}
-            how={300}
-            time={20}
+            how={100}
+            time={10}
             size={"25px"}
             background={"magenta"}
           />

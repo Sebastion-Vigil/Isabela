@@ -11,15 +11,16 @@
 .sky-tray-wrapper {
     width: 50.6vw;
     height: 32.5vh;
+    min-width: 320px;
     position: absolute;
     left: 24.76vw;
-    top: 66.9vh;
+    top: 67vh;
     z-index: -1;
 }
 
 @media only screen and (max-width: 360px) {
   .sky-tray-wrapper {
-      width: 99.9vw;
+      width: 100vw;
       left: 0vw;
   }
 }
