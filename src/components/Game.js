@@ -1,5 +1,6 @@
 import React from 'react';
 // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
+
 import Screen from './Screen.js';
 import CheatScreen from './CheatScreen.js';
 import CheatButton from './CheatButton.js';
@@ -14,13 +15,14 @@ import isa2 from '../images/isa2.png';
 import isa3 from '../images/isa3.png';
 import isa4 from '../images/isa4.png';
 import isa5 from '../images/isa5.png';
-import isa6 from '../images/isa6.png';
+import isa6 from '../images/isa6.png'; 
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tileTimer: undefined,
+      dragTimer: undefined,
       left: 6.5,
       top: 71.5,
       cheat: false,
@@ -29,12 +31,12 @@ class Game extends React.Component {
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
       tileImages: [
-       isa1,
-       isa2,
-       isa3,
-       isa4,
-       isa5,
-       isa6
+        isa1, 
+        isa2,
+        isa3,
+        isa4,
+        isa5, 
+        isa6
       ]
     };
   }
@@ -50,10 +52,10 @@ class Game extends React.Component {
   randomTileGenerator = () => {
     const width = 10.5; // tile width  
     const height = 8.5; // tile height
-    const xSpace = .4; // horizontal space between tiles
-    const ySpace = 1; // vertical space between tiles
-    let l = 6.5;
-    let t = 71.5;
+    const xSpace = 1.4; // horizontal space between tiles
+    const ySpace = 2.3; // vertical space between tiles
+    let l = 38.51;
+    let t = 68.1;
     const randomIs = [0, 1, 2, 3, 4, 5];
     const randomizedTileStyles = [];
     const imgs = this.state.tileImages;
@@ -63,16 +65,16 @@ class Game extends React.Component {
         left: l.toString() + 'vw',
         top: t.toString() + 'vh',
         backgroundImage: "url(" + imgs[randomIs[rIndex]] +  ")",
-        backgroundSize: '100% 100%'
+        backgroundSize: '100% 100%',
       }
       randomizedTileStyles.push(s);
-      l = randomizedTileStyles.length % 8 === 0 ? 6.5 : l + width + xSpace;
-      t = randomizedTileStyles.length % 8 === 0 ? t + height + ySpace : t;
+      l = randomizedTileStyles.length % 2 === 0 ? 38.4 : l + width + xSpace;
+      t = randomizedTileStyles.length % 2 === 0 ? t + height + ySpace : t;
       randomIs.splice(rIndex, 1);
-    }
+    } // come back and adjust final style later
     const finalStyle = {
-      left: '82.80000000000001vw',
-      top: '90.5vh',
+      left: '50.41vw',
+      top: '89.7vh',
       backgroundImage: "url(" + imgs[randomIs[0]] + ")",
       backgroundSize: '100% 100%'
     };
@@ -115,65 +117,53 @@ class Game extends React.Component {
           storeIndex: i,
           randomIs: rIs
         })
-      }, 50)
+      }, 0)
     })
   }
 
-  // componentDidUpdate() {
+  // handleDragStart = (style) => {
+  //   const dragStartStyle = JSON.parse(JSON.stringify(style));
+  //   const img = dragStartStyle.backgroundImage;
+  //   const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles)); 
+  //   const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
+  //   dragStartStyle.border = "2px solid red";
+  //   rendered[tileIndex] = dragStartStyle;
+  //   this.setState({
+  //     renderedTiles: rendered
+  //   });
   // }
 
-  flirtingWithProps = () => {
-    const miAmor = this.props;
-    console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
-    console.log('elementDimensions: ', miAmor.elementDimensions);
-    console.log('isActive: ', miAmor.isActive);
-    console.log('isPositionOutside: ', miAmor.isPositionOutside);
-    console.log('position: ', miAmor.position);
-    console.log('In all her beauty: ', miAmor);
-  };
-
   handleDragStart = (style) => {
-    const hiLiteStyle = JSON.parse(JSON.stringify(style));
-    hiLiteStyle.border = "2px solid red";
-    const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
-    const img = hiLiteStyle.backgroundImage;
-    const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
-    rendered[tileIndex] = hiLiteStyle;
-    this.setState({
-      renderedTiles: rendered
-    });
-  }
-
-  handleDragMove = (style) => {
+    const borderedStyle = JSON.parse(JSON.stringify(style));
+    borderedStyle.border = "2px solid red";
     this.setState({
       dragTimer: setInterval(() => {
-        const s = style;
+        const s = JSON.parse(JSON.stringify(borderedStyle));
         const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
-        const dragged = rendered[tileIndex];
         const cursorInfo = this.props;
         const x = ((100 * cursorInfo.position.x) / window.innerWidth).toString() + 'vw';
         const y = ((100 * cursorInfo.position.y) / window.innerHeight).toString() + 'vh';
-        dragged.left = x;
-        dragged.top = y;
-        rendered[tileIndex] = dragged;
+        s.left = x;
+        s.top = y;
+        rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered
         });
-      }, 10)
+      }, 0)
     }) 
   }
 
   handleDragEnd = (style) => {
     console.log("drag stopped!");
-    const hiLiteStyle = JSON.parse(JSON.stringify(style));
-    hiLiteStyle.border = "";
-    const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
-    const img = hiLiteStyle.backgroundImage;
-    const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
-    rendered[tileIndex] = hiLiteStyle;
     clearInterval(this.state.dragTimer);
+    const dragEndStyle = JSON.parse(JSON.stringify(style));
+    const img = dragEndStyle.backgroundImage;
+    const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles)); 
+    const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
+    dragEndStyle.border = "";
+    rendered[tileIndex] = dragEndStyle;
     this.setState({
       renderedTiles: rendered
     });
@@ -193,7 +183,6 @@ class Game extends React.Component {
               rendered={this.state.renderedTiles}
               gameProps={this.props}
               startDrag={() => this.handleDragStart(s)}
-              moveDrag={() => this.handleDragMove(s)}
               endDrag={() => this.handleDragEnd(s)}
             />
           })
@@ -226,3 +215,14 @@ export default Game;
 // the app lol
 // now that I think about it wouldn't it be cool to use a timer
 // to make the tiles appear slowly in front of the user?
+
+
+// flirtingWithProps = () => {
+//     const miAmor = this.props;
+//     console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
+//     console.log('elementDimensions: ', miAmor.elementDimensions);
+//     console.log('isActive: ', miAmor.isActive);
+//     console.log('isPositionOutside: ', miAmor.isPositionOutside);
+//     console.log('position: ', miAmor.position);
+//     console.log('In all her beauty: ', miAmor);
+//   };

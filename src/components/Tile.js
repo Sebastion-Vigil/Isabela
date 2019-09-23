@@ -8,10 +8,9 @@ class Tile extends React.Component {
     return <div 
       className="tile" 
       style={this.props.style}
-      draggable="true"
-      onTouchStart={this.props.startDrag}
-      onTouchMove={this.props.moveDrag}
-      onTouchEnd={this.props.endDrag}
+      // draggable="true"
+      onMouseDown={this.props.startDrag}
+      onMouseUp={this.props.endDrag}
     />
   }
 }

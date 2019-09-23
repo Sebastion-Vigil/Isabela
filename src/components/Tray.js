@@ -7,34 +7,16 @@ class Tray extends React.Component {
     return (
       <div className="tray">
         <div className="tray-row">
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
+          <div className="octet left">Te</div>
+          <div className="octet right">amo</div>
         </div>
         <div className="tray-row">
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
+          <div className="octet left">con</div>
+          <div className="octet right">todo</div>
         </div>
         <div className="tray-row">
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
-          <div className="octet"></div>
+          <div className="octet left">mi</div>
+          <div className="octet right">corazón</div>
         </div>
       </div>
     );

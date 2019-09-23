@@ -6,10 +6,23 @@ import React from 'react';
 import '../css/Screen.css';
 
 class Screen extends React.Component {
-    render(props) {
+    render() {
         return (
             <div className="screen">
-                {this.propsInfo}
+               <div className="solution-pad">
+                <div className="solution-row">
+                   <div className="tile-drop left"></div>
+                   <div className="tile-drop right"></div>
+                </div>
+                <div className="solution-row">
+                   <div className="tile-drop left"></div>
+                   <div className="tile-drop right"></div>
+                </div>
+                <div className="solution-row">
+                   <div className="tile-drop left"></div>
+                   <div className="tile-drop right"></div>
+                </div>
+               </div>
             </div>
         )
     }

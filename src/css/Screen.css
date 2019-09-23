@@ -1,22 +1,75 @@
 
 .cheat-screen {
     width: 51vw;
-    height: 69.5vh;
+    height: 65vh;
     border: 2px solid white;
     border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: magenta;
+}
+
+.hint-pad {
+    width: 23vw;
+    height: 29vh;
     background-image: url('../images/isaAnswer.png');
     background-size: 100% 100%;
-    opacity: .1;
-    color: white;
+    opacity: .4;
+}
+
+.hint-border {
+    width: 23vw;
+    height: 29vh;
+    border: 2px solid indigo;
+    border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
+    background-color: white;
 }
 
 .screen {
    width: 51vw;
-   height: 69.5vh;
+   height: 65vh;
    border: 2px solid white;
    border-radius: 2% 2% 2% 2%/5% 5% 5% 5%;
-   /* background-image: url('../images/laTuti.jpeg');
-   background-size: 100% 100%;
-   opacity: .1; */
+   background-color: #0d0d0d;
    color: white;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background-image: url('../images/screenBackground.png');
+   background-size: 100% 100%;
+}
+
+.solution-pad {
+   width: 23vw;
+   height: 29vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+}
+
+.solution-row {
+    width: 98.5%;
+    height: 32.9%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile-drop {
+    width: 50%;
+    height: 100%;
+    border: .003em dashed pink;
+    
+}
+
+.left {
+    margin-right: 1vw; 
+}
+
+.right {
+    margin-left: 1vw;
 }
