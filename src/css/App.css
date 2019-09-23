@@ -18,7 +18,11 @@
     z-index: -1;
 }
 
-@media only screen and (max-width: 360px) {
+.game-wrapper {
+    min-height: 480px;
+}
+
+@media only screen and (max-width: 800px) {
   .sky-tray-wrapper {
       width: 100vw;
       left: 0vw;

@@ -80,7 +80,7 @@
     margin-left: 1vw;
 }
 
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 800px) {
     .cheat-screen {
         width: 100vw;
     }
