@@ -30,9 +30,7 @@ class Game extends React.Component {
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
-      tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
-      windowWidth: 0,
-      windowHeight: 0
+      tileImages: [isa1, isa2, isa3, isa4, isa5, isa6]
     };
   }
 
@@ -46,9 +44,7 @@ class Game extends React.Component {
   };
 
   randomTileGenerator = () => {
-    const ww = this.state.windowWidth; // these are px 
-    console.log("ww: ", ww);
-    console.log("typeof ww: ", typeof ww);
+    const ww = window.innerWidth; // these are px 
     const tileW = 11; // tile width
     const tileH = 8.5; // tile height
     const xSpace = 2; // horizontal space between tiles
@@ -87,32 +83,15 @@ class Game extends React.Component {
     });
   };
 
-  componentDidUpdate() {
-    console.log("componentDidUpdate()");
-  }
-
   randTileIndex = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  updateWindowDimensions = () => {
+  componentDidMount() {
+    console.log("just mounted");
     console.log("windowWidth: ", window.innerWidth);
     console.log("windowHeight: ", window.innerHeight);
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight
-    });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  componentDidMount() {
     this.randomTileGenerator();
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-    console.log("cursor props from componentDidMount(): ", this.props);
     this.setState({
       tileTimer: setInterval(() => {
         console.log("in the loop!");
