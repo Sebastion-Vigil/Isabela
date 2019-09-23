@@ -8,7 +8,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: magenta;
+    background-color: #0d0d0d;
+    background-image: url('../images/screenBackground.png');
+    background-size: 100% 100%;
+    opacity: .9;
 }
 
 .hint-pad {
@@ -40,6 +43,7 @@
    align-items: center;
    background-image: url('../images/screenBackground.png');
    background-size: 100% 100%;
+   opacity: .9;
 }
 
 .solution-pad {

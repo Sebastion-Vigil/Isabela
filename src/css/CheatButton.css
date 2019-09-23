@@ -4,8 +4,8 @@
     border-radius: 50%;
     background-color: darkred;
     position: absolute; 
-    left: 2vw;
-    top: 20.5vh;
+    left: 30vw;
+    top: 80.5vh;
     padding: .5%;
     border: 2px solid red;
     color: white;
@@ -13,7 +13,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    opacity: .5;
+    opacity: .8;
 }
 
 .cheat-button:active {

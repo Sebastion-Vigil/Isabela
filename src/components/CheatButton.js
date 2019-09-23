@@ -5,7 +5,7 @@ import '../css/CheatButton.css';
 class CheatButton extends React.Component {
     state = {
         buttonMsg: '?',
-        onHoverMsg: 'preview completed puzzle'
+        onHoverMsg: 'ver imagen completo'
     }
 
     handleButtonClick = () => {
