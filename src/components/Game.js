@@ -46,10 +46,10 @@ class Game extends React.Component {
   randomTileGenerator = () => {
     const width = 10.5; // tile width
     const height = 8.5; // tile height
-    const xSpace = 1.4; // horizontal space between tiles
+    const xSpace = 1.45; // horizontal space between tiles
     const ySpace = 2.3; // vertical space between tiles
     let l = 38.51;
-    let t = 68.1;
+    let t = 67;
     const randomIs = [0, 1, 2, 3, 4, 5];
     const randomizedTileStyles = [];
     const imgs = this.state.tileImages;

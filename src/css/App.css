@@ -1,6 +1,6 @@
 .App {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     /* background-color: #333333; */
     display: flex;
     flex-direction: column;
@@ -14,12 +14,8 @@
     min-width: 320px;
     position: absolute;
     left: 24.76vw;
-    top: 67vh;
+    top: 66.1vh;
     z-index: -1;
-}
-
-.game-wrapper {
-    min-height: 480px;
 }
 
 @media only screen and (max-width: 800px) {
