@@ -92,4 +92,7 @@
     .solution-pad {
         width: 77vw;
     }
+    .tile-drop {
+        width: 40vw;
+    }
 }

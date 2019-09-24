@@ -45,11 +45,11 @@ class Game extends React.Component {
 
   randomTileGenerator = () => {
     const ww = window.innerWidth; // these are px 
-    const tileW = 11; // tile width
+    const tileW = ww > 800 ? 11 : 37.2; // tile width
     const tileH = 8.5; // tile height
     const xSpace = 2; // horizontal space between tiles
     const ySpace = 2.3 // vertical space between tiles
-    let l = 37.9; // let l = 10;
+    let l = ww > 800 ? 37.9 : 10.1; 
     let t = 67;
     const randomIs = [0, 1, 2, 3, 4, 5];
     const randomizedTileStyles = [];
@@ -65,7 +65,14 @@ class Game extends React.Component {
         backgroundSize: "100% 100%"
       };
       randomizedTileStyles.push(s);
-      l = randomizedTileStyles.length % 2 === 0 ? 37.9 : l + tileW + xSpace;
+      if (randomizedTileStyles.length % 2 === 0 && ww > 800) {
+        l = 37.9;
+      } else if (randomizedTileStyles.length % 2 === 0 && ww <= 800) {
+        l = 10.1;
+      } else {
+        l = l;
+      }
+      l = randomizedTileStyles.length % 2 === 0 ? l : l + tileW + xSpace;
       t = randomizedTileStyles.length % 2 === 0 ? t + tileH + ySpace : t;
       randomIs.splice(rIndex, 1);
     } // come back and adjust final style later
