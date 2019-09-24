@@ -16,10 +16,18 @@ class CheatButton extends React.Component {
       })
     }
 
+    responsiveStyle = () => {
+      return window.innerWidth > 800 ? 
+      { left: '30vw', top: '80.5vh'} :
+      { left: '3vw', top: '80.5vh'};
+    }
+
     render() {
+        const s = this.responsiveStyle();
         return (
             <div 
               className="cheat-button"
+              style={s}
               onClick={this.handleButtonClick}
               title={this.state.onHoverMsg}
             >
