@@ -30,7 +30,7 @@ class Game extends React.Component {
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
-      tileImages: [isa1, isa2, isa3, isa4, isa5, isa6]
+      tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
     };
   }
 
@@ -39,17 +39,17 @@ class Game extends React.Component {
     console.log("state from toggle: ", this.state);
     console.log("cursor props: ", this.props);
     this.setState({
-      cheat: toggled
+      cheat: toggled,
     });
   };
 
   randomTileGenerator = () => {
-    const ww = window.innerWidth; // these are px 
+    const ww = window.innerWidth; // these are px
     const tileW = ww > 800 ? 11 : 37.2; // tile width
     const tileH = 8.5; // tile height
     const xSpace = 2; // horizontal space between tiles
-    const ySpace = 2.3 // vertical space between tiles
-    let l = ww > 800 ? 37.9 : 10.1; 
+    const ySpace = 2.3; // vertical space between tiles
+    let l = ww > 800 ? 37.9 : 10.1;
     let t = 67;
     const randomIs = [0, 1, 2, 3, 4, 5];
     const randomizedTileStyles = [];
@@ -57,12 +57,12 @@ class Game extends React.Component {
     while (randomIs.length > 1) {
       let rIndex = this.randTileIndex(0, randomIs.length - 1);
       let s = {
-        width: tileW.toString() + 'vw',
-        height: tileH.toString() + 'vh',
+        width: tileW.toString() + "vw",
+        height: tileH.toString() + "vh",
         left: l.toString() + "vw",
         top: t.toString() + "vh",
         backgroundImage: "url(" + imgs[randomIs[rIndex]] + ")",
-        backgroundSize: "100% 100%"
+        backgroundSize: "100% 100%",
       };
       randomizedTileStyles.push(s);
       if (randomizedTileStyles.length % 2 === 0 && ww > 800) {
@@ -70,23 +70,23 @@ class Game extends React.Component {
       } else if (randomizedTileStyles.length % 2 === 0 && ww <= 800) {
         l = 10.1;
       } else {
-        l = l;
+        l = l + tileW + xSpace;
       }
-      l = randomizedTileStyles.length % 2 === 0 ? l : l + tileW + xSpace;
+      // l = randomizedTileStyles.length % 2 === 0 ? l : l + tileW + xSpace;
       t = randomizedTileStyles.length % 2 === 0 ? t + tileH + ySpace : t;
       randomIs.splice(rIndex, 1);
     } // come back and adjust final style later
     const finalStyle = {
-      width: tileW.toString() + 'vw',
-      height: tileH.toString() + 'vh',
-      left: "50.9vw",
+      width: tileW.toString() + "vw",
+      height: tileH.toString() + "vh",
+      left: ww > 800 ? "50.9vw" : "49.3vw",
       top: "88.6vh",
       backgroundImage: "url(" + imgs[randomIs[0]] + ")",
-      backgroundSize: "100% 100%"
+      backgroundSize: "100% 100%",
     };
     randomizedTileStyles.push(finalStyle);
     this.setState({
-      styleStore: randomizedTileStyles
+      styleStore: randomizedTileStyles,
     });
   };
 
@@ -120,9 +120,9 @@ class Game extends React.Component {
         this.setState({
           renderedTiles: rendered,
           storeIndex: i,
-          randomIs: rIs
+          randomIs: rIs,
         });
-      }, 300)
+      }, 300),
     });
   }
 
@@ -145,9 +145,9 @@ class Game extends React.Component {
         s.top = y;
         rendered[tileIndex] = s;
         this.setState({
-          renderedTiles: rendered
+          renderedTiles: rendered,
         });
-      }, 0)
+      }, 0),
     });
   };
 
@@ -161,7 +161,7 @@ class Game extends React.Component {
     dragEndStyle.border = "";
     rendered[tileIndex] = dragEndStyle;
     this.setState({
-      renderedTiles: rendered
+      renderedTiles: rendered,
     });
   };
 
