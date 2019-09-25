@@ -127,6 +127,12 @@ class Game extends React.Component {
   }
 
   handleDragStart = style => {
+    console.log("cursor pos x: ", ((100 * this.props.position.x) / window.innerWidth).toString() + "vw")
+    console.log("cursor pos y: ", ((100 * this.props.position.y) / window.innerHeight).toString() + "vh");
+    console.log("tile left (x): ", style.left);
+    console.log("tile top (y): ", style.top);
+    console.log("tile width: ", style.width);
+    console.log("tile height: ", style.height);
     const borderedStyle = JSON.parse(JSON.stringify(style));
     borderedStyle.border = "2px solid red";
     this.setState({
