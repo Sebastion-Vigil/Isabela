@@ -12,6 +12,7 @@ class Tile extends React.Component {
       onMouseUp={this.props.endDrag}
       onTouchStart={this.props.startDrag}
       onTouchEnd={this.props.endDrag}
+      onClick={this.props.stop}
     />
   }
 }

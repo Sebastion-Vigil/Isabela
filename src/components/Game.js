@@ -127,14 +127,6 @@ class Game extends React.Component {
   }
 
   handleDragStart = style => {
-    console.log("cursor pos x: ", ((100 * this.props.position.x) / window.innerWidth).toString() + "vw")
-    console.log("cursor pos y: ", ((100 * this.props.position.y) / window.innerHeight).toString() + "vh");
-    console.log("tile left (x): ", style.left);
-    console.log("tile top (y): ", style.top);
-    console.log("cursor pos x - tile pos left (x): ", (100 * parseInt(this.props.position.x) / window.innerWidth) - parseInt(style.left));
-    console.log("cursor pos y - tile pos top (y): ", (100 * parseInt(this.props.position.y) / window.innerHeight) - parseInt(style.top));
-    console.log("tile width: ", style.width);
-    console.log("tile height: ", style.height);
     const borderedStyle = JSON.parse(JSON.stringify(style));
     borderedStyle.border = "2px solid red";
     this.setState({
@@ -145,11 +137,13 @@ class Game extends React.Component {
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
         let x =
-          ((100 * cursorInfo.position.x) / window.innerWidth - 5.5).toString() + "vw";
+          ((100 * cursorInfo.position.x) / window.innerWidth - 5.5).toString() +
+          "vw";
         let y =
-          ((100 * cursorInfo.position.y) / window.innerHeight - 4.225).toString() +
-          "vh";
-        console.log("x, y: ", x, y);
+          (
+            (100 * cursorInfo.position.y) / window.innerHeight -
+            4.225
+          ).toString() + "vh";
         s.left = x;
         s.top = y;
         rendered[tileIndex] = s;
@@ -174,6 +168,21 @@ class Game extends React.Component {
     });
   };
 
+  EBrake = s => {
+    if (s.border === "1px solid red") {
+      clearInterval(this.state.dragTimer);
+      const newS = JSON.parse(JSON.stringify(s));
+      newS.border = "";
+      const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
+      const img = newS.backgroundImage;
+      const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
+      rendered[tileIndex] = newS;
+      this.setState({
+        renderedTiles: rendered
+      });
+    }
+  };
+
   render() {
     const screen = this.state.cheat
       ? this.state.screens[1]
@@ -189,6 +198,7 @@ class Game extends React.Component {
               gameProps={this.props}
               startDrag={() => this.handleDragStart(s)}
               endDrag={() => this.handleDragEnd(s)}
+              stop={() => this.EBrake(s)}
             />
           );
         })}
