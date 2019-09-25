@@ -131,6 +131,8 @@ class Game extends React.Component {
     console.log("cursor pos y: ", ((100 * this.props.position.y) / window.innerHeight).toString() + "vh");
     console.log("tile left (x): ", style.left);
     console.log("tile top (y): ", style.top);
+    console.log("cursor pos x - tile pos left (x): ", (100 * parseInt(this.props.position.x) / window.innerWidth) - parseInt(style.left));
+    console.log("cursor pos y - tile pos top (y): ", (100 * parseInt(this.props.position.y) / window.innerHeight) - parseInt(style.top));
     console.log("tile width: ", style.width);
     console.log("tile height: ", style.height);
     const borderedStyle = JSON.parse(JSON.stringify(style));
@@ -142,11 +144,12 @@ class Game extends React.Component {
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
-        const x =
-          ((100 * cursorInfo.position.x) / window.innerWidth).toString() + "vw";
-        const y =
-          ((100 * cursorInfo.position.y) / window.innerHeight).toString() +
+        let x =
+          ((100 * cursorInfo.position.x) / window.innerWidth - 5.5).toString() + "vw";
+        let y =
+          ((100 * cursorInfo.position.y) / window.innerHeight - 4.225).toString() +
           "vh";
+        console.log("x, y: ", x, y);
         s.left = x;
         s.top = y;
         rendered[tileIndex] = s;
