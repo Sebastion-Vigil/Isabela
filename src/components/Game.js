@@ -161,7 +161,7 @@ class Game extends React.Component {
         this.setState({
           renderedTiles: rendered,
         });
-      }, 1),
+      }, 75),
     });
   };
 
