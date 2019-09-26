@@ -90,11 +90,22 @@ class Game extends React.Component {
     });
   };
 
+  flirtingWithProps = () => {
+    const miAmor = this.props;
+    console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
+    console.log('elementDimensions: ', miAmor.elementDimensions);
+    console.log('isActive: ', miAmor.isActive);
+    console.log('isPositionOutside: ', miAmor.isPositionOutside);
+    console.log('position: ', miAmor.position);
+    console.log('In all her beauty: ', miAmor);
+  };
+
   randTileIndex = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   componentDidMount() {
+    this.flirtingWithProps();
     console.log("just mounted");
     console.log("windowWidth: ", window.innerWidth);
     console.log("windowHeight: ", window.innerHeight);
