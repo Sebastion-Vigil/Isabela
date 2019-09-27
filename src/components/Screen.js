@@ -10,8 +10,7 @@ class Screen extends React.Component {
       height: 10,
       width: window.innerWidth > 800 ? 12 : 40,
       left: window.innerWidth > 800 ? 38 : 10,
-      top: 17.7,
-      styles: []
+      top: 17.7
     }
     
     componentDidMount() {
@@ -25,18 +24,16 @@ class Screen extends React.Component {
              height: h.toString() + 'vh',
              width: w.toString() + 'vw',
              left: l.toString() + 'vw',
-             top: t.toString() + 'vh',
-             border: '.003em dashed pink'
+             top: t.toString() + 'vh'
           });
           l = sStore.length % 2 === 0 ? this.state.left : l + w + .1;
           t = sStore.length % 2 === 0 ? t + h + .1 : t;
        }
-       this.props.styles(sStore);
-       this.setState({ styles: sStore });
+       this.props.getDropStyles(sStore);
     }
 
     render() {
-        const s = this.props.s();
+        const s = this.props.s;
         return (
             <div className="screen">
                <div className="solution-pad">

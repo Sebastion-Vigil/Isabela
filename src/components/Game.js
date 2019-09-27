@@ -26,8 +26,9 @@ class Game extends React.Component {
       left: 6.5,
       top: 71.5,
       cheat: false,
-      screens: [<Screen styles={this.getDropPadStyles} s={this.useDropPadStyles} />, <CheatScreen />],
+      screens: [<Screen getDropStyles={this.getDropPadStyles} s={this.useDropPadStyles} />, <CheatScreen />],
       dropPadStyles: [],
+      dropIndex: undefined,
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
@@ -40,13 +41,13 @@ class Game extends React.Component {
   getDropPadStyles = (styles) => {
     const padStyles = [];
     styles.forEach((s) => {
+      s.border = '.003em dashed pink';
       padStyles.push(s);
     });
     this.setState({
       dropPadStyles: padStyles
     });
     console.log("dropStyles: ", padStyles);
-    return padStyles;
   }
 
   useDropPadStyles = () => {
@@ -154,6 +155,16 @@ class Game extends React.Component {
         let x = ((100 * cursorInfo.position.x) / window.innerWidth - tileWidth);
         let y = ((100 * cursorInfo.position.y) / window.innerHeight - tileHeight);
         let tilePos = [];
+        let dropI = this.state.dropIndex;
+        let dPadStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
+        const mightyI = this.detectTileDropArea();
+        if (mightyI) {
+          console.log("you're in the area!")
+          const onArea = JSON.parse(JSON.stringify(dPadStyles[mightyI]));
+          onArea.border = '.003em dashed pink';
+          dPadStyles[mightyI] = onArea;
+          console.log(onArea);
+        }
         if (x < 0) {
           x = 0;
         }
@@ -175,7 +186,9 @@ class Game extends React.Component {
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
-          currentTilePos: tilePos
+          currentTilePos: tilePos,
+          dropIndex: dropI,
+          dropPadStyles: dPadStyles
         });
       }, 10),
     });
@@ -193,6 +206,28 @@ class Game extends React.Component {
       renderedTiles: rendered,
     });
   };
+
+  detectTileDropArea = () => {
+    // use in handleDragStart() -> return index of drop pad to be changed
+    const tileW = window.innerWidth > 800 ? 12 : 40;
+    const tileH = 10;
+    let left = window.innerWidth > 800 ? 38 : 10;
+    const leftReset = window.innerWidth > 800 ? 38 : 10;
+    let top = 17.7;
+    const space = .1;
+    const x = this.state.currentTilePos[0];
+    const y = this.state.currentTilePos[1];
+    let dropAreaI = undefined;
+    for (let i = 0; i < 6; i++) {
+      if ((x >= left && x <= left + tileW) && (y >= top && y <= top + tileH)) {
+        dropAreaI = i;
+        break;
+      }
+      left = (i + 1) % 2 === 0 ? leftReset : left + tileW + space;
+      top = (i + 1) % 2 === 0 ? top + tileH + space : 17.7;
+    }
+    return dropAreaI;
+  }
 
   render() {
     const screen = this.state.cheat
