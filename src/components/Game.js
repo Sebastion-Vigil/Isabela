@@ -26,7 +26,7 @@ class Game extends React.Component {
       left: 6.5,
       top: 71.5,
       cheat: false,
-      screens: [<Screen styles={this.props.styles} />, <CheatScreen />],
+      screens: ['foo', <CheatScreen />],
       dropPadStyles: [],
       dropIndex: undefined,
       dropPadParams: {
@@ -172,7 +172,11 @@ class Game extends React.Component {
           const onArea = JSON.parse(JSON.stringify(dPadStyles[mightyI]));
           onArea.border = '.004em solid blue';
           dPadStyles[mightyI] = onArea;
-          console.log(onArea);
+        }
+        if (!mightyI && dropI) {
+          const leaveArea = JSON.parse(JSON.stringify(dPadStyles[dropI]));
+          leaveArea.border = '.003em dashed pink';
+          dPadStyles[dropI] = leaveArea;
         }
         if (x < 0) {
           x = 0;
