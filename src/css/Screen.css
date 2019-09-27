@@ -51,8 +51,8 @@
 }
 
 .solution-pad {
-   width: 23vw;
-   height: 29vh;
+   width: 25vw;
+   height: 30vh;
    display: flex;
    flex-direction: column;
    justify-content: space-evenly;
@@ -68,18 +68,7 @@
 }
 
 .tile-drop {
-    width: 50%;
-    height: 100%;
-    border: .003em dashed pink;
-    
-}
-
-.left {
-    margin-right: 1vw; 
-}
-
-.right {
-    margin-left: 1vw;
+    position: absolute;
 }
 
 @media only screen and (max-width: 800px) {
@@ -91,9 +80,6 @@
     }
     .solution-pad {
         width: 77vw;
-    }
-    .tile-drop {
-        width: 40vw;
     }
     .hint-pad {
         width: 77vw;

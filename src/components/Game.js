@@ -26,13 +26,31 @@ class Game extends React.Component {
       left: 6.5,
       top: 71.5,
       cheat: false,
-      screens: [<Screen />, <CheatScreen />],
+      screens: [<Screen styles={this.getDropPadStyles} s={this.useDropPadStyles} />, <CheatScreen />],
+      dropPadStyles: [],
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
-      selectedTile: 0,
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
+      currentTilePos: [0, 0], // x, y position of tile being dragged
+      tileDown: false, // is tile set in a pad?
       tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
     };
+  }
+
+  getDropPadStyles = (styles) => {
+    const padStyles = [];
+    styles.forEach((s) => {
+      padStyles.push(s);
+    });
+    this.setState({
+      dropPadStyles: padStyles
+    });
+    console.log("dropStyles: ", padStyles);
+    return padStyles;
+  }
+
+  useDropPadStyles = () => {
+    return this.state.dropPadStyles;
   }
 
   toggleHelpButton = () => {
@@ -40,7 +58,7 @@ class Game extends React.Component {
     console.log("state from toggle: ", this.state);
     console.log("cursor props: ", this.props);
     this.setState({
-      cheat: toggled,
+      cheat: toggled, 
     });
   };
 
@@ -135,6 +153,7 @@ class Game extends React.Component {
         const cursorInfo = this.props;
         let x = ((100 * cursorInfo.position.x) / window.innerWidth - tileWidth);
         let y = ((100 * cursorInfo.position.y) / window.innerHeight - tileHeight);
+        let tilePos = [];
         if (x < 0) {
           x = 0;
         }
@@ -147,6 +166,8 @@ class Game extends React.Component {
         if (y > 88.5) {
           y = 88.5;
         }
+        tilePos.push(x);
+        tilePos.push(y);
         x = x.toString() + 'vw';
         y = y.toString() + 'vh';
         s.left = x;
@@ -154,9 +175,9 @@ class Game extends React.Component {
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
-          selectedTile: tileIndex
+          currentTilePos: tilePos
         });
-      }, 1),
+      }, 10),
     });
   };
 
@@ -172,20 +193,6 @@ class Game extends React.Component {
       renderedTiles: rendered,
     });
   };
-
-  preventTileStick = () => {
-    clearInterval(this.state.dragTimer);
-    const tileIndex = this.state.selectedTile;
-    if (tileIndex === undefined) return;
-    const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
-    const style = JSON.parse(JSON.stringify(rendered[tileIndex]));
-    style.border = "";
-    rendered[tileIndex] = style;
-    this.setState({
-      renderedTiles: rendered,
-      selectedTile: undefined
-    })
-  }
 
   render() {
     const screen = this.state.cheat

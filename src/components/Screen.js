@@ -6,21 +6,51 @@ import React from 'react';
 import '../css/Screen.css';
 
 class Screen extends React.Component {
+    state = {
+      height: 10,
+      width: window.innerWidth > 800 ? 12 : 40,
+      left: window.innerWidth > 800 ? 38 : 10,
+      top: 17.7,
+      styles: []
+    }
+    
+    componentDidMount() {
+       let h = this.state.height;
+       let w = this.state.width;
+       let l = this.state.left;
+       let t = this.state.top;
+       let sStore = [];
+       for (let i = 0; i < 6; i++) {
+          sStore.push({
+             height: h.toString() + 'vh',
+             width: w.toString() + 'vw',
+             left: l.toString() + 'vw',
+             top: t.toString() + 'vh',
+             border: '.003em dashed pink'
+          });
+          l = sStore.length % 2 === 0 ? this.state.left : l + w + .1;
+          t = sStore.length % 2 === 0 ? t + h + .1 : t;
+       }
+       this.props.styles(sStore);
+       this.setState({ styles: sStore });
+    }
+
     render() {
+        const s = this.props.s();
         return (
             <div className="screen">
                <div className="solution-pad">
                 <div className="solution-row">
-                   <div className="tile-drop left"></div>
-                   <div className="tile-drop right"></div>
+                   <div className="tile-drop one" style={s[0]}></div>
+                   <div className="tile-drop two" style={s[1]}></div>
                 </div>
                 <div className="solution-row">
-                   <div className="tile-drop left"></div>
-                   <div className="tile-drop right"></div>
+                   <div className="tile-drop three" style={s[2]}></div>
+                   <div className="tile-drop four" style={s[3]}></div>
                 </div>
                 <div className="solution-row">
-                   <div className="tile-drop left"></div>
-                   <div className="tile-drop right"></div>
+                   <div className="tile-drop five" style={s[4]}></div>
+                   <div className="tile-drop six" style={s[5]}></div>
                 </div>
                </div>
             </div>

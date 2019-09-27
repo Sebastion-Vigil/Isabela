@@ -48,7 +48,7 @@ class App extends React.Component {
           background={"pink"}
         />
         <GameArea className="App">
-          <Game />
+          <Game/>
         </GameArea>
         <div className="sky-tray-wrapper">
           <Sky
