@@ -4,7 +4,7 @@ import React from 'react';
 // https://spin.atomicobject.com/2018/08/20/objects-not-valid-react-child/
 
 import '../css/Screen.css';
-
+// initial styles should be created in Game.js
 class Screen extends React.Component {
     state = {
       height: 10,
