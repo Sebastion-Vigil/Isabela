@@ -26,7 +26,7 @@ class Game extends React.Component {
       left: 6.5,
       top: 71.5,
       cheat: false,
-      screens: [<Screen getDropStyles={this.getDropPadStyles} s={this.useDropPadStyles} />, <CheatScreen />],
+      screens: [<Screen styles={this.props.styles} />, <CheatScreen />],
       dropPadStyles: [],
       dropIndex: undefined,
       dropPadParams: {
@@ -46,6 +46,8 @@ class Game extends React.Component {
 
   toggleHelpButton = () => {
     const toggled = !this.state.cheat;
+    console.log("winWidth: ", window.innerWidth);
+    console.log("winHeight: ", window.innerHeight);
     console.log("state from toggle: ", this.state);
     console.log("cursor props: ", this.props);
     this.setState({
@@ -118,7 +120,7 @@ class Game extends React.Component {
           top: t.toString() + 'vh',
           border: '.003em dashed pink'
        });
-       l = sStore.length % 2 === 0 ? this.state.left : l + w + .1;
+       l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + .1;
        t = sStore.length % 2 === 0 ? t + h + .1 : t;
     }
     window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
@@ -168,7 +170,7 @@ class Game extends React.Component {
         if (mightyI) {
           console.log("you're in the area!")
           const onArea = JSON.parse(JSON.stringify(dPadStyles[mightyI]));
-          onArea.border = '.003em dashed pink';
+          onArea.border = '.004em solid blue';
           dPadStyles[mightyI] = onArea;
           console.log(onArea);
         }
@@ -239,7 +241,7 @@ class Game extends React.Component {
   render() {
     const screen = this.state.cheat
       ? this.state.screens[1]
-      : this.state.screens[0];
+      : <Screen styles={this.state.dropPadStyles} />
     return (
       <div className="game">
         {this.state.renderedTiles.map((s, i) => {
