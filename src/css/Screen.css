@@ -95,4 +95,10 @@
     .tile-drop {
         width: 40vw;
     }
+    .hint-pad {
+        width: 77vw;
+    }
+    .hint-border {
+        width: 77vw;
+    }
 }
