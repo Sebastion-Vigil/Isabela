@@ -222,6 +222,7 @@ class Game extends React.Component {
 
   detectTileDropArea = () => {
     // use in handleDragStart() -> return index of drop pad to be changed
+    // this method is buggy -> review and refactor later
     const tileW = window.innerWidth > 800 ? 12 : 40;
     const tileH = 10;
     let left = window.innerWidth > 800 ? 38 : 10;
