@@ -29,6 +29,12 @@ class Game extends React.Component {
       screens: [<Screen getDropStyles={this.getDropPadStyles} s={this.useDropPadStyles} />, <CheatScreen />],
       dropPadStyles: [],
       dropIndex: undefined,
+      dropPadParams: {
+        height: 10,
+        width: window.innerWidth > 800 ? 12 : 40,
+        left: window.innerWidth > 800 ? 38 : 10,
+        top: 17.7
+      },
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
@@ -36,22 +42,6 @@ class Game extends React.Component {
       tileDown: false, // is tile set in a pad?
       tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
     };
-  }
-
-  getDropPadStyles = (styles) => {
-    const padStyles = [];
-    styles.forEach((s) => {
-      s.border = '.003em dashed pink';
-      padStyles.push(s);
-    });
-    this.setState({
-      dropPadStyles: padStyles
-    });
-    console.log("dropStyles: ", padStyles);
-  }
-
-  useDropPadStyles = () => {
-    return this.state.dropPadStyles;
   }
 
   toggleHelpButton = () => {
@@ -115,9 +105,26 @@ class Game extends React.Component {
   };
 
   componentDidMount() {
+    let h = this.state.dropPadParams.height;
+    let w = this.state.dropPadParams.width;
+    let l = this.state.dropPadParams.left;
+    let t = this.state.dropPadParams.top;
+    let sStore = [];
+    for (let i = 0; i < 6; i++) {
+       sStore.push({
+          height: h.toString() + 'vh',
+          width: w.toString() + 'vw',
+          left: l.toString() + 'vw',
+          top: t.toString() + 'vh',
+          border: '.003em dashed pink'
+       });
+       l = sStore.length % 2 === 0 ? this.state.left : l + w + .1;
+       t = sStore.length % 2 === 0 ? t + h + .1 : t;
+    }
     window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
     this.randomTileGenerator();
     this.setState({
+      dropPadStyles: sStore,
       tileTimer: setInterval(() => {
         const rIs = this.state.randomIs;
         let i = this.randTileIndex(0, rIs.length - 1);
