@@ -29,6 +29,7 @@ class Game extends React.Component {
       screens: [<Screen />, <CheatScreen />],
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
+      selectedTile: 0,
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
       tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
     };
@@ -153,6 +154,7 @@ class Game extends React.Component {
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
+          selectedTile: tileIndex
         });
       }, 1),
     });
@@ -171,20 +173,19 @@ class Game extends React.Component {
     });
   };
 
-  EBrake = s => {
-    if (s.border === "1px solid red") {
-      clearInterval(this.state.dragTimer);
-      const newS = JSON.parse(JSON.stringify(s));
-      newS.border = "";
-      const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
-      const img = newS.backgroundImage;
-      const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
-      rendered[tileIndex] = newS;
-      this.setState({
-        renderedTiles: rendered
-      });
-    }
-  };
+  preventTileStick = () => {
+    clearInterval(this.state.dragTimer);
+    const tileIndex = this.state.selectedTile;
+    if (tileIndex === undefined) return;
+    const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
+    const style = JSON.parse(JSON.stringify(rendered[tileIndex]));
+    style.border = "";
+    rendered[tileIndex] = style;
+    this.setState({
+      renderedTiles: rendered,
+      selectedTile: undefined
+    })
+  }
 
   render() {
     const screen = this.state.cheat
@@ -201,7 +202,6 @@ class Game extends React.Component {
               gameProps={this.props}
               startDrag={() => this.handleDragStart(s)}
               endDrag={() => this.handleDragEnd(s)}
-              stop={() => this.EBrake(s)}
             />
           );
         })}
