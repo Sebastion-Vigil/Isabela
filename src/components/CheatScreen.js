@@ -15,6 +15,3 @@ class CheatScreen extends React.Component {
 }
 
 export default CheatScreen;
-
-
-// I cannot hear you for some reason

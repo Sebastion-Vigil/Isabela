@@ -90,38 +90,20 @@ class Game extends React.Component {
     });
   };
 
-  flirtingWithProps = () => {
-    const miAmor = this.props;
-    console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
-    console.log('elementDimensions: ', miAmor.elementDimensions);
-    console.log('isActive: ', miAmor.isActive);
-    console.log('isPositionOutside: ', miAmor.isPositionOutside);
-    console.log('position: ', miAmor.position);
-    console.log('In all her beauty: ', miAmor);
-  };
-
   randTileIndex = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   componentDidMount() {
-    this.flirtingWithProps();
-    console.log("just mounted");
-    console.log("windowWidth: ", window.innerWidth);
-    console.log("windowHeight: ", window.innerHeight);
+    window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
     this.randomTileGenerator();
     this.setState({
       tileTimer: setInterval(() => {
-        console.log("in the loop!");
         const rIs = this.state.randomIs;
         let i = this.randTileIndex(0, rIs.length - 1);
         let rendered = this.state.renderedTiles;
         if (rendered.length === 5) {
-          console.log("no more timer!!");
           clearInterval(this.state.tileTimer);
-        }
-        if (rendered.length === 5) {
-          console.log("but we're still gonna complete the rest of the code!");
         }
         rendered.push(this.state.styleStore[rIs[i]]);
         if (rIs.length > 1) {
@@ -140,33 +122,43 @@ class Game extends React.Component {
   handleDragStart = style => {
     const borderedStyle = JSON.parse(JSON.stringify(style));
     borderedStyle.border = "2px solid red";
+    console.log("cursor info: ", this.props);
     this.setState({
       dragTimer: setInterval(() => {
+        const tileWidth = 5.5; // (half tile width)
+        const tileHeight = 4.225; // (half tile height)
         const s = JSON.parse(JSON.stringify(borderedStyle));
         const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
-        let x =
-          ((100 * cursorInfo.position.x) / window.innerWidth - 5.5).toString() +
-          "vw";
-        let y =
-          (
-            (100 * cursorInfo.position.y) / window.innerHeight -
-            4.225
-          ).toString() + "vh";
+        let x = ((100 * cursorInfo.position.x) / window.innerWidth - tileWidth);
+        let y = ((100 * cursorInfo.position.y) / window.innerHeight - tileHeight);
+        if (x < 0) {
+          x = 0;
+        }
+        if (x > 88.5) {
+          x = 88.5;
+        }
+        if (y < 0) {
+          y = 0;
+        }
+        if (y > 88.5) {
+          y = 88.5;
+        }
+        x = x.toString() + 'vw';
+        y = y.toString() + 'vh';
         s.left = x;
         s.top = y;
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
         });
-      }, 75),
+      }, 1),
     });
   };
 
   handleDragEnd = style => {
-    console.log("drag stopped!");
     clearInterval(this.state.dragTimer);
     const dragEndStyle = JSON.parse(JSON.stringify(style));
     const img = dragEndStyle.backgroundImage;
@@ -263,3 +255,13 @@ export default Game;
 //     renderedTiles: rendered
 //   });
 // }
+
+//  flirtingWithProps = () => {
+//     const miAmor = this.props;
+//     console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
+//     console.log('elementDimensions: ', miAmor.elementDimensions);
+//     console.log('isActive: ', miAmor.isActive);
+//     console.log('isPositionOutside: ', miAmor.isPositionOutside);
+//     console.log('position: ', miAmor.position);
+//     console.log('In all her beauty: ', miAmor);
+//   };
