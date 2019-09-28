@@ -26,7 +26,6 @@ class Game extends React.Component {
       left: 6.5,
       top: 71.5,
       cheat: false,
-      screens: ["dafuq", <CheatScreen />],
       dropPadStyles: [],
       dropIndex: undefined,
       dropPadParams: {
@@ -225,20 +224,13 @@ class Game extends React.Component {
   };
 
   detectTileDropArea = () => {
-    const tileW = window.innerWidth > 800 ? 12 : 40;
-    const tileH = 10;
-    let left = window.innerWidth > 800 ? 38 : 10;
-    const leftReset = window.innerWidth > 800 ? 38 : 10;
-    let top = 17.7;
-    const space = 0.1;
-    const x = this.state.currentTilePos[0];
-    const y = this.state.currentTilePos[1];
+    // return index of pad with tile inside it
     
   };
 
   render() {
     const screen = this.state.cheat ? (
-      this.state.screens[1]
+      <CheatScreen />
     ) : (
       <Screen styles={this.state.dropPadStyles} />
     );
