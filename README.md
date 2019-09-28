@@ -25,7 +25,7 @@
 #### Stretch Goals:
 - Randomize tile generation 
 - Make game responsive/mobile-friendly
-- Make landing pad for each tile that responds to tile hovering and/or placed inside
+- Make landing pad responsive to tile hovering over and/or placed inside
 - Have game check when landing pad filled and return win or lose message to user
 
 #### Mega Stretch Goal:
@@ -38,4 +38,3 @@
 - Flexbox
 - Exploratory coding--state management in pure React
 - No special libraries for drag-and-drop; just me, myself, and mad props
-- Straight slangin' props all over the place
