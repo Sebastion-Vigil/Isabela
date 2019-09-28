@@ -20,7 +20,7 @@
 #### Stretch Goals:
 - Randomize tile generation 
 - Make game responsive/mobile-friendly
-- Make landing pad for each tile that responds to tile hovering and/or place indside
+- Make landing pad for each tile that responds to tile hovering and/or placed inside
 - Have game check landing pad once finished, and check if winner or loser
 
 #### Mega Stretch Goal:
