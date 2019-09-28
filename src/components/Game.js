@@ -182,19 +182,33 @@ class Game extends React.Component {
     });
   };
 
-  detectTileDropArea = (arrXY) => {
+  detectTileDropArea = (arrXY) => { // pass changed tilePos[] before dragTimer setState()
     // return index of pad with tile inside it -> will use in handleDragStart()
     const x = arrXY[0];
     const y = arrXY[1];
     const tileW = this.state.dropPadParams.width;
     const tileH = this.state.dropPadParams.height;
-    
+    const space = .1;
+    const normalDropPad = [
+      [38, 17.7],
+      [50.1, 17.7],
+      [38, 27.8],
+      [50.1, 27.8],
+      [38, 37.9],
+      [50.1, 37.9]
+    ];
+    const mobileDropPad = [
+      [10, 17.7],
+      [50.1, 17.7],
+      [10, 27.8],
+      [50.1, 27.8],
+      [10, 37.9],
+      [50.1, 37.9]
+    ];  
     // tengo una idea...
     if (window.innerWidth > 800) {
-      
     } else {
       if (window.innerWidth < 800) {
-
       }
     }
   };
