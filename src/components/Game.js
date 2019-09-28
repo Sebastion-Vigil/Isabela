@@ -186,7 +186,10 @@ class Game extends React.Component {
     // return index of pad with tile inside it -> will use in handleDragStart()
     const x = arrXY[0];
     const y = arrXY[1];
+    const tileW = this.state.dropPadParams.width;
+    const tileH = this.state.dropPadParams.height;
     
+    // tengo una idea...
     if (window.innerWidth > 800) {
       
     } else {

@@ -10,7 +10,7 @@ class Tray extends React.Component {
       <div className="tray">
         <div className="tray-row">
           <div className="octet left">Isabela</div>
-          <div className="octet right">te amo</div>
+          <div className="octet right">te quiero</div>
         </div>
         <div className="tray-row">
           <div className="octet left">con</div>
