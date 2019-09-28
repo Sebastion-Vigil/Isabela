@@ -1,4 +1,4 @@
-# Juego de Rompecabezas para mi Super Isa
+# Juego de Rompecabezas para Isabela
 
 ## A puzzle game for Isabela
 
