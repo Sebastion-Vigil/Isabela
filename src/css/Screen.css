@@ -62,9 +62,9 @@
 .solution-row {
     width: 98.5%;
     height: 32.9%;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 
 .tile-drop {
@@ -76,7 +76,7 @@
         width: 100vw;
     }
     .screen {
-        width: 100vw; 
+        width: 100vw;
     }
     .solution-pad {
         width: 77vw;

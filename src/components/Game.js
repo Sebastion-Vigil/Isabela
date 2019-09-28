@@ -26,14 +26,14 @@ class Game extends React.Component {
       left: 6.5,
       top: 71.5,
       cheat: false,
-      screens: ['foo', <CheatScreen />],
+      screens: ["dafuq", <CheatScreen />],
       dropPadStyles: [],
       dropIndex: undefined,
       dropPadParams: {
         height: 10,
         width: window.innerWidth > 800 ? 12 : 40,
         left: window.innerWidth > 800 ? 38 : 10,
-        top: 17.7
+        top: 17.7,
       },
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
@@ -51,7 +51,7 @@ class Game extends React.Component {
     console.log("state from toggle: ", this.state);
     console.log("cursor props: ", this.props);
     this.setState({
-      cheat: toggled, 
+      cheat: toggled,
     });
   };
 
@@ -113,17 +113,19 @@ class Game extends React.Component {
     let t = this.state.dropPadParams.top;
     let sStore = [];
     for (let i = 0; i < 6; i++) {
-       sStore.push({
-          height: h.toString() + 'vh',
-          width: w.toString() + 'vw',
-          left: l.toString() + 'vw',
-          top: t.toString() + 'vh',
-          border: '.003em dashed pink'
-       });
-       l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + .1;
-       t = sStore.length % 2 === 0 ? t + h + .1 : t;
+      sStore.push({
+        height: h.toString() + "vh",
+        width: w.toString() + "vw",
+        left: l.toString() + "vw",
+        top: t.toString() + "vh",
+        border: ".003em dashed pink",
+      });
+      l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1;
+      t = sStore.length % 2 === 0 ? t + h + 0.1 : t;
     }
-    window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
+    window.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    });
     this.randomTileGenerator();
     this.setState({
       dropPadStyles: sStore,
@@ -154,54 +156,55 @@ class Game extends React.Component {
     console.log("cursor info: ", this.props);
     this.setState({
       dragTimer: setInterval(() => {
-        const tileWidth = 5.5; // (half tile width)
-        const tileHeight = 4.225; // (half tile height)
+        const tileWidth = window.innerWidth > 800 ? 6 : 20; // (half tile width)
+        const tileHeight = 5; // (half tile height)
         const s = JSON.parse(JSON.stringify(borderedStyle));
         const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
-        let x = ((100 * cursorInfo.position.x) / window.innerWidth - tileWidth);
-        let y = ((100 * cursorInfo.position.y) / window.innerHeight - tileHeight);
+        let x = (100 * cursorInfo.position.x) / window.innerWidth - tileWidth;
+        let y = (100 * cursorInfo.position.y) / window.innerHeight - tileHeight;
         let tilePos = [];
-        let dropI = this.state.dropIndex;
-        let dPadStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
-        const mightyI = this.detectTileDropArea();
-        if (mightyI) {
-          console.log("you're in the area!")
-          const onArea = JSON.parse(JSON.stringify(dPadStyles[mightyI]));
-          onArea.border = '.004em solid blue';
-          dPadStyles[mightyI] = onArea;
-        }
-        if (!mightyI && dropI) {
-          const leaveArea = JSON.parse(JSON.stringify(dPadStyles[dropI]));
-          leaveArea.border = '.003em dashed pink';
-          dPadStyles[dropI] = leaveArea;
-        }
-        if (x < 0) {
-          x = 0;
-        }
-        if (x > 88.5) {
-          x = 88.5;
-        }
-        if (y < 0) {
-          y = 0;
-        }
-        if (y > 88.5) {
-          y = 88.5;
+        if (window.innerWidth > 800) {
+          if (x < 0) {
+            x = 0;
+          }
+          if (x > 80) {
+            x = 80;
+          }
+          if (y < 5) {
+            y = 5;
+          }
+          if (y > 88.5) {
+            y = 88.5;
+          }
+        } else {
+          if (window.innerWidth < 800) {
+            if (x < 0) {
+              x = 0;
+            }
+            if (x > 58) {
+              x = 58;
+            }
+            if (y < 5) {
+              y = 5;
+            }
+            if (y > 88.6) {
+              y = 88.6;
+            }
+          }
         }
         tilePos.push(x);
         tilePos.push(y);
-        x = x.toString() + 'vw';
-        y = y.toString() + 'vh';
+        x = x.toString() + "vw";
+        y = y.toString() + "vh";
         s.left = x;
         s.top = y;
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
           currentTilePos: tilePos,
-          dropIndex: dropI,
-          dropPadStyles: dPadStyles
         });
       }, 10),
     });
@@ -211,6 +214,7 @@ class Game extends React.Component {
     clearInterval(this.state.dragTimer);
     const dragEndStyle = JSON.parse(JSON.stringify(style));
     const img = dragEndStyle.backgroundImage;
+
     const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
     dragEndStyle.border = "";
@@ -228,12 +232,12 @@ class Game extends React.Component {
     let left = window.innerWidth > 800 ? 38 : 10;
     const leftReset = window.innerWidth > 800 ? 38 : 10;
     let top = 17.7;
-    const space = .1;
+    const space = 0.1;
     const x = this.state.currentTilePos[0];
     const y = this.state.currentTilePos[1];
     let dropAreaI = undefined;
     for (let i = 0; i < 6; i++) {
-      if ((x >= left && x <= left + tileW) && (y >= top && y <= top + tileH)) {
+      if (x >= left && x <= left + tileW && (y >= top && y <= top + tileH)) {
         dropAreaI = i;
         break;
       }
@@ -241,12 +245,14 @@ class Game extends React.Component {
       top = (i + 1) % 2 === 0 ? top + tileH + space : 17.7;
     }
     return dropAreaI;
-  }
+  };
 
   render() {
-    const screen = this.state.cheat
-      ? this.state.screens[1]
-      : <Screen styles={this.state.dropPadStyles} />
+    const screen = this.state.cheat ? (
+      this.state.screens[1]
+    ) : (
+      <Screen styles={this.state.dropPadStyles} />
+    );
     return (
       <div className="game">
         {this.state.renderedTiles.map((s, i) => {
