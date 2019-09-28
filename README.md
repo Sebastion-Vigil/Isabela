@@ -13,5 +13,6 @@
 - JSX
 - Flexbox
 - Exploratory coding--state management in pure React
+- No special libraries for dragAndDrop; just me and my spaghetti code
 
 ![image](./src/images/appDeIsabela.png)
