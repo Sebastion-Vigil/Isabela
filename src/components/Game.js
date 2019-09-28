@@ -225,8 +225,6 @@ class Game extends React.Component {
   };
 
   detectTileDropArea = () => {
-    // use in handleDragStart() -> return index of drop pad to be changed
-    // this method is buggy -> review and refactor later
     const tileW = window.innerWidth > 800 ? 12 : 40;
     const tileH = 10;
     let left = window.innerWidth > 800 ? 38 : 10;
@@ -235,16 +233,7 @@ class Game extends React.Component {
     const space = 0.1;
     const x = this.state.currentTilePos[0];
     const y = this.state.currentTilePos[1];
-    let dropAreaI = undefined;
-    for (let i = 0; i < 6; i++) {
-      if (x >= left && x <= left + tileW && (y >= top && y <= top + tileH)) {
-        dropAreaI = i;
-        break;
-      }
-      left = (i + 1) % 2 === 0 ? leftReset : left + tileW + space;
-      top = (i + 1) % 2 === 0 ? top + tileH + space : 17.7;
-    }
-    return dropAreaI;
+    
   };
 
   render() {
@@ -327,3 +316,15 @@ export default Game;
 //     console.log('position: ', miAmor.position);
 //     console.log('In all her beauty: ', miAmor);
 //   };
+
+// from detectTileDrop(): 
+// let dropAreaI = undefined;
+//     for (let i = 0; i < 6; i++) {
+//       if (x >= left && x <= left + tileW && (y >= top && y <= top + tileH)) {
+//         dropAreaI = i;
+//         break;
+//       }
+//       left = (i + 1) % 2 === 0 ? leftReset : left + tileW + space;
+//       top = (i + 1) % 2 === 0 ? top + tileH + space : 17.7;
+//     }
+//     return dropAreaI;

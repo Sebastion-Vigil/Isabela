@@ -1,0 +1,26 @@
+w > 800:      w < 800:
+tw: 12       tw: 40
+th: 10       th: 10
+tile one:    tile one:
+left: 38     left: 10
+top: 17.7    top: 17.7
+
+tile two:    tile two: 
+left: 50.1   left: 50.1
+top: 17.7    top: 17.7
+
+tile three:  tile three:
+left: 38     left: 10
+top: 27.8    top: 27.8
+
+tile four:   tile four:
+left: 50.1   left: 50.1
+top: 27.8    top: 27.8
+
+tile five:   tile five:
+left: 38     left: 10
+top: 37.9    top: 37.9
+
+tile six:    tile six:
+left: 50.1   left: 50.1
+top: 37.9    top: 37.9

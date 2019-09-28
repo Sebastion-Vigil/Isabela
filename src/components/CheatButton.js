@@ -5,7 +5,7 @@ import '../css/CheatButton.css';
 class CheatButton extends React.Component {
     state = {
         buttonMsg: '?',
-        onHoverMsg: 'ver imagen completo'
+        onHoverMsg: 'solución'
     }
 
     handleButtonClick = () => {
