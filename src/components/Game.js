@@ -207,6 +207,9 @@ class Game extends React.Component {
     ];  
     // tengo una idea...
     if (window.innerWidth > 800) {
+      for (let i = 0; i < normalDropPad.length; i++) {
+        
+      }      
     } else {
       if (window.innerWidth < 800) {
       }
