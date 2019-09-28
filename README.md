@@ -26,7 +26,7 @@
 - Randomize tile generation 
 - Make game responsive/mobile-friendly
 - Make landing pad for each tile that responds to tile hovering and/or placed inside
-- Have game check when landing pad filled and return winner or loser to user
+- Have game check when landing pad filled and return win or lose message to user
 
 #### Mega Stretch Goal:
 - Add ability to upload other images for new games
