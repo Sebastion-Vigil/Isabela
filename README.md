@@ -4,6 +4,11 @@
 
 ![image](./src/images/appDeIsabela.png)
 
+### Tech:
+- React
+- JavaScript
+- CSS
+
 #### Project Start Date:
 - 09-22-2019
 
@@ -25,11 +30,6 @@
 
 #### Mega Stretch Goal:
 - Add ability to upload other images for new games
-
-### Tech:
-- React
-- JavaScript
-- CSS
 
 #### More:
 - react-sky
