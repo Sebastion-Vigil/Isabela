@@ -1,0 +1,3 @@
+need to make responsive for landscape view on mobile
+need to refactor everywhere like crazy, however, will
+finish project first. Game will have a definitive start and end where the user will either win or lose.

@@ -105,50 +105,6 @@ class Game extends React.Component {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  componentDidMount() {
-    let h = this.state.dropPadParams.height;
-    let w = this.state.dropPadParams.width;
-    let l = this.state.dropPadParams.left;
-    let t = this.state.dropPadParams.top;
-    let sStore = [];
-    for (let i = 0; i < 6; i++) {
-      sStore.push({
-        height: h.toString() + "vh",
-        width: w.toString() + "vw",
-        left: l.toString() + "vw",
-        top: t.toString() + "vh",
-        border: ".003em dashed pink",
-      });
-      l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1;
-      t = sStore.length % 2 === 0 ? t + h + 0.1 : t;
-    }
-    window.addEventListener("contextmenu", function(e) {
-      e.preventDefault();
-    });
-    this.randomTileGenerator();
-    this.setState({
-      dropPadStyles: sStore,
-      tileTimer: setInterval(() => {
-        const rIs = this.state.randomIs;
-        let i = this.randTileIndex(0, rIs.length - 1);
-        let rendered = this.state.renderedTiles;
-        if (rendered.length === 5) {
-          clearInterval(this.state.tileTimer);
-        }
-        rendered.push(this.state.styleStore[rIs[i]]);
-        if (rIs.length > 1) {
-          rIs.splice(i, 1);
-        }
-        i = rIs.length > 1 ? this.randTileIndex(0, rIs.length - 1) : rIs[0];
-        this.setState({
-          renderedTiles: rendered,
-          storeIndex: i,
-          randomIs: rIs,
-        });
-      }, 300),
-    });
-  }
-
   handleDragStart = style => {
     const borderedStyle = JSON.parse(JSON.stringify(style));
     borderedStyle.border = "2px solid red";
@@ -164,8 +120,11 @@ class Game extends React.Component {
         const cursorInfo = this.props;
         let x = (100 * cursorInfo.position.x) / window.innerWidth - tileWidth;
         let y = (100 * cursorInfo.position.y) / window.innerHeight - tileHeight;
-        let tilePos = [];
+        let tilePos = []; // ([x, y])
+        let dropI = this.state.dropIndex; // still not sure but methinks will need
         if (window.innerWidth > 800) {
+          // looks like my cat walked across the keyboard
+          // works though. will refactor fo sho'
           if (x < 0) {
             x = 0;
           }
@@ -223,10 +182,63 @@ class Game extends React.Component {
     });
   };
 
-  detectTileDropArea = () => {
-    // return index of pad with tile inside it
+  detectTileDropArea = (arrXY) => {
+    // return index of pad with tile inside it -> will use in handleDragStart()
+    const x = arrXY[0];
+    const y = arrXY[1];
     
+    if (window.innerWidth > 800) {
+      
+    } else {
+      if (window.innerWidth < 800) {
+
+      }
+    }
   };
+
+  componentDidMount() {
+    let h = this.state.dropPadParams.height;
+    let w = this.state.dropPadParams.width;
+    let l = this.state.dropPadParams.left;
+    let t = this.state.dropPadParams.top;
+    let sStore = [];
+    for (let i = 0; i < 6; i++) {
+      sStore.push({
+        height: h.toString() + "vh",
+        width: w.toString() + "vw",
+        left: l.toString() + "vw",
+        top: t.toString() + "vh",
+        border: ".003em dashed pink",
+      });
+      l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1;
+      t = sStore.length % 2 === 0 ? t + h + 0.1 : t;
+    }
+    window.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    });
+    this.randomTileGenerator();
+    this.setState({
+      dropPadStyles: sStore,
+      tileTimer: setInterval(() => {
+        const rIs = this.state.randomIs;
+        let i = this.randTileIndex(0, rIs.length - 1);
+        let rendered = this.state.renderedTiles;
+        if (rendered.length === 5) {
+          clearInterval(this.state.tileTimer);
+        }
+        rendered.push(this.state.styleStore[rIs[i]]);
+        if (rIs.length > 1) {
+          rIs.splice(i, 1);
+        }
+        i = rIs.length > 1 ? this.randTileIndex(0, rIs.length - 1) : rIs[0];
+        this.setState({
+          renderedTiles: rendered,
+          storeIndex: i,
+          randomIs: rIs,
+        });
+      }, 300),
+    });
+  }
 
   render() {
     const screen = this.state.cheat ? (
@@ -309,7 +321,7 @@ export default Game;
 //     console.log('In all her beauty: ', miAmor);
 //   };
 
-// from detectTileDrop(): 
+// from detectTileDrop():
 // let dropAreaI = undefined;
 //     for (let i = 0; i < 6; i++) {
 //       if (x >= left && x <= left + tileW && (y >= top && y <= top + tileH)) {
