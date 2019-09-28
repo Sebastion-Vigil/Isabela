@@ -7,7 +7,7 @@
 #### Project Start Date:
 - 09-22-2019
 
-#### Projected Finish Date:
+#### Estimated Project Completion Date:
 - 10-04-2019
 
 #### MVP:
