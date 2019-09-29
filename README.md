@@ -2,7 +2,7 @@
 
 ## A puzzle game for Isabela
 
-## [Click here to see it online](https://fervent-bassi-ebd484.netlify.com/)
+## [Click here to play](https://fervent-bassi-ebd484.netlify.com/)
 
 ![image](./src/images/appDeIsabela.png)
 
