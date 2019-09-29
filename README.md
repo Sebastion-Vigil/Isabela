@@ -11,10 +11,20 @@
   
 
 ### Tech:  
+  
+#### Core:  
 
 - [React](https://reactjs.org/)
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)  
+- [JSX](https://jsx.github.io/)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [CSS Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)  
+  
+
+#### Additional libraries:  
+  
+- [react-sky](https://www.bypeople.com/sky-animated-background-react-component/)
+- [react-cursor-position](https://www.npmjs.com/package/react-cursor-position)  
   
 
 #### Project Start Date:  
@@ -51,9 +61,5 @@
 
 #### Más:  
 
-- [react-sky](https://www.bypeople.com/sky-animated-background-react-component/)
-- [react-cursor-position](https://www.npmjs.com/package/react-cursor-position)
-- [JSX](https://jsx.github.io/)
-- [CSS Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 - Exploratory coding--state management in pure React
 - No special libraries for drag-and-drop; just me, myself, and mad props
