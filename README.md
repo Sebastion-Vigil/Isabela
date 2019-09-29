@@ -1,11 +1,10 @@
-# Juego de Rompecabezas para Isabela
+# Juego de Rompecabezas para Isabela  
 
+## A puzzle game for Isabela  
 
-## A puzzle game for Isabela
+## [Click here to play](https://fervent-bassi-ebd484.netlify.com/)  
 
-## [Click here to play](https://fervent-bassi-ebd484.netlify.com/)
-
-![image](./src/images/appDeIsabela.png)
+![image](./src/images/appDeIsabela.png)  
 
 ### Tech:
 - [React](https://reactjs.org/)
