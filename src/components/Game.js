@@ -111,17 +111,19 @@ class Game extends React.Component {
     console.log("cursor info: ", this.props);
     this.setState({
       dragTimer: setInterval(() => {
-        const tileWidth = window.innerWidth > 800 ? 6 : 20; // (half tile width)
-        const tileHeight = 5; // (half tile height)
+        const tileHalfWD = window.innerWidth > 800 ? 6 : 20;
+        const tileHalfHT = 5;
         const s = JSON.parse(JSON.stringify(borderedStyle));
         const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
-        let x = (100 * cursorInfo.position.x) / window.innerWidth - tileWidth;
-        let y = (100 * cursorInfo.position.y) / window.innerHeight - tileHeight;
+        // (Things are gonna change I can feel it)
+        // there's a better way to map the cursorInfo x/y to the tile I can sense it
+        let x = (100 * cursorInfo.position.x) / window.innerWidth - tileHalfWD;
+        let y = (100 * cursorInfo.position.y) / window.innerHeight - tileHalfHT;
         let tilePos = []; // ([x, y])
-        let dropI = this.state.dropIndex; // still not sure but methinks will need
+        let dropI = this.state.dropIndex;
         if (window.innerWidth > 800) {
           // looks like my cat walked across the keyboard
           // works though. will refactor fo sho'
@@ -155,6 +157,7 @@ class Game extends React.Component {
         }
         tilePos.push(x);
         tilePos.push(y);
+        dropI = this.detectTileDrop(tilePos);
         x = x.toString() + "vw";
         y = y.toString() + "vh";
         s.left = x;
@@ -163,6 +166,7 @@ class Game extends React.Component {
         this.setState({
           renderedTiles: rendered,
           currentTilePos: tilePos,
+          dropIndex: dropI
         });
       }, 10),
     });
@@ -182,13 +186,15 @@ class Game extends React.Component {
     });
   };
 
-  detectTileDropArea = (arrXY) => { // pass changed tilePos[] before dragTimer setState()
+  detectTileDrop = (arrXY) => { // pass changed tilePos[] before dragTimer setState()
     // return index of pad with tile inside it -> will use in handleDragStart()
+    let dropI = this.state.dropIndex;
     const x = arrXY[0];
     const y = arrXY[1];
-    const tileW = this.state.dropPadParams.width;
-    const tileH = this.state.dropPadParams.height;
-    const space = .1;
+    const tileHalfWD = window.innerWidth > 800 ? 6 : 20; 
+    const tileHalfHT = 5;
+    const padHalfWD = this.state.dropPadParams.width / 2;
+    const padHalfHT = this.state.dropPadParams.height / 2;
     const normalDropPad = [
       [38, 17.7],
       [50.1, 17.7],
@@ -206,14 +212,25 @@ class Game extends React.Component {
       [50.1, 37.9]
     ];  
     // tengo una idea...
-    if (window.innerWidth > 800) {
-      for (let i = 0; i < normalDropPad.length; i++) {
-        
-      }      
-    } else {
-      if (window.innerWidth < 800) {
-      }
-    }
+   const dropPad = window.innerWidth > 800 ? normalDropPad : mobileDropPad;
+   const boundsLen = window.innerWidth > 800 ? normalDropPad.length : mobileDropPad.length; // lens may not stay same in future
+   let xyI = 0; // index into outer arr
+   while (xyI < boundsLen) {
+     console.log("while loop did something at least!");
+     let xBound = dropPad[xyI][0];
+     let yBound = dropPad[xyI][1];
+     let xEdge = xBound + padHalfWD * 2;
+     let yEdge = yBound + padHalfHT * 2;
+     console.log(x, y);
+     if ((x - tileHalfWD >= xBound && x + tileHalfWD <= xEdge) && (y - tileHalfHT >= yBound && y + tileHalfHT <= yEdge)) {
+       dropI = xyI;
+       console.log("Inside pad!");
+       console.log("dropI: ", dropI);
+       break;
+     }
+     xyI += 1;
+   }
+   return dropI;
   };
 
   componentDidMount() {
