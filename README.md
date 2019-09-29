@@ -1,4 +1,6 @@
 # Juego de Rompecabezas para Isabela
+&nbsp;
+&nbsp;
 ## A puzzle game for Isabela
 ## [Click here to play](https://fervent-bassi-ebd484.netlify.com/)
   
