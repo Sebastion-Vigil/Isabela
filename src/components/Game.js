@@ -119,20 +119,22 @@ class Game extends React.Component {
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
-        let tilePos = JSON.parse(JSON.stringify(this.state.currentTilePos)); // ([x, y])
+        const tilePos = JSON.parse(JSON.stringify(this.state.currentTilePos)); // ([x, y])
         s.left = tilePos[0]; // prev left/top of tile -> muy importante
         s.top = tilePos[1];  // give s prev tile top/left params
         // okay so I've been trying to make x/yDiff x/y - left/top--> in the previous
         // version I used half tile width & half tile height to map x/y to center of tile
         // and it worked. need to rethink this...
-        let xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
-        let yCent = (100 * cursorInfo.position.y / wh - parseFloat(s.top)) / parseFloat(tileH);
+        const yCent = (100 * cursorInfo.position.y / wh - parseFloat(s.top)) / parseFloat(tileH);
+        const xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
+        const xDivisor = 1 / xCent;
+        const yDivisor = 1 / yCent;
         let x = 100 * cursorInfo.position.x / ww;
         let y = 100 * cursorInfo.position.y / wh;
-        // let xCent = (x - parseFloat(s.left)) / parseFloat(tileW);
-        // let yCent = (y - parseFloat(s.top)) / parseFloat(tileH);
-        console.log(xCent, yCent);
-        // let dropI = this.state.dropIndex;
+        const xDiff = parseFloat(tileW / xDivisor);
+        const yDiff = parseFloat(tileH / yDivisor);
+        x -= xDiff;
+        y -= yDiff;
         if (ww > 800) {
           if (x < 0) {
             x = 0;
