@@ -125,12 +125,13 @@ class Game extends React.Component {
         // okay so I've been trying to make x/yDiff x/y - left/top--> in the previous
         // version I used half tile width & half tile height to map x/y to center of tile
         // and it worked. need to rethink this...
-        let xCent = 100 * cursorInfo.position.x / ww - parseFloat(tileW / s.left);
-        let yCent = 100 * cursorInfo.position.y / wh - parseFloat(tileH / s.top);
-        console.log(100 * cursorInfo.position.x / ww, tileW);
-        console.log("xCent, yCent: ", xCent, yCent);
+        let xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
+        let yCent = (100 * cursorInfo.position.y / wh - parseFloat(s.top)) / parseFloat(tileH);
         let x = 100 * cursorInfo.position.x / ww;
         let y = 100 * cursorInfo.position.y / wh;
+        // let xCent = (x - parseFloat(s.left)) / parseFloat(tileW);
+        // let yCent = (y - parseFloat(s.top)) / parseFloat(tileH);
+        console.log(xCent, yCent);
         // let dropI = this.state.dropIndex;
         if (ww > 800) {
           if (x < 0) {
