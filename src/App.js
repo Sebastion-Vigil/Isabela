@@ -42,9 +42,9 @@ class App extends React.Component {
             7: flower8,
             8: flower9
           }}
-          how={250}
+          how={100}
           time={20}
-          size={"100px"}
+          size={"75px"}
           background={"pink"}
         />
         <GameArea className="App">
@@ -66,7 +66,7 @@ class App extends React.Component {
             }}
             how={250}
             time={20}
-            size={"75px"}
+            size={"25px"}
             background={"magenta"}
           />
         </div>
