@@ -23,8 +23,8 @@ class Game extends React.Component {
     this.state = {
       tileTimer: undefined,
       dragTimer: undefined,
-      left: 6.5,
-      top: 71.5,
+      left: window.innerWidth > 800 ? 37.9 : 10.1,
+      top: 67,
       cheat: false,
       dropPadStyles: [],
       dropIndex: undefined,
@@ -37,7 +37,7 @@ class Game extends React.Component {
       styleStore: [], // preload with tile styles in componentWillMount()
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
-      currentTilePos: [0, 0], // x, y position of tile being dragged
+      currentTilePos: [window.innerWidth > 800 ? 37.9 : 10.1, 67], // x, y position of tile being dragged
       tileDown: false, // is tile set in a pad?
       tileImages: [isa1, isa2, isa3, isa4, isa5, isa6],
     };
@@ -60,8 +60,8 @@ class Game extends React.Component {
     const tileH = 8.5; // tile height
     const xSpace = 2; // horizontal space between tiles
     const ySpace = 2.3; // vertical space between tiles
-    let l = ww > 800 ? 37.9 : 10.1;
-    let t = 67;
+    let l = this.state.left;
+    let t = this.state.top;
     const randomIs = [0, 1, 2, 3, 4, 5];
     const randomizedTileStyles = [];
     const imgs = this.state.tileImages;
@@ -108,25 +108,32 @@ class Game extends React.Component {
   handleDragStart = style => {
     const borderedStyle = JSON.parse(JSON.stringify(style));
     borderedStyle.border = "2px solid red";
-    console.log("cursor info: ", this.props);
     this.setState({
       dragTimer: setInterval(() => {
-        const tileHalfWD = window.innerWidth > 800 ? 6 : 20;
-        const tileHalfHT = 5;
+        const ww = window.innerWidth; // these are px
+        const wh = window.innerHeight;
+        const tileW = ww > 800 ? 11 : 37.2; // tile width
+        const tileH = 8.5;
         const s = JSON.parse(JSON.stringify(borderedStyle));
         const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
         const img = s.backgroundImage;
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
-        // (Things are gonna change I can feel it)
-        // there's a better way to map the cursorInfo x/y to the tile I can sense it
-        let x = (100 * cursorInfo.position.x) / window.innerWidth - tileHalfWD;
-        let y = (100 * cursorInfo.position.y) / window.innerHeight - tileHalfHT;
-        let tilePos = []; // ([x, y])
-        let dropI = this.state.dropIndex;
-        if (window.innerWidth > 800) {
-          // looks like my cat walked across the keyboard
-          // works though. will refactor fo sho'
+        let tilePos = JSON.parse(JSON.stringify(this.state.currentTilePos)); // ([x, y])
+        s.left = tilePos[0]; // prev left/top of tile -> muy importante
+        s.top = tilePos[1];  // give s prev tile top/left params
+        // okay so I've been trying to make x/yDiff x/y - left/top--> in the previous
+        // version I used half tile width & half tile height to map x/y to center of tile
+        // and it worked. need to rethink this...
+        let xDiff = 100 * cursorInfo.position.x / ww - parseFloat(s.left);
+        let yDiff = 100 * cursorInfo.position.y / wh - parseFloat(s.top);
+        let x = 100 * cursorInfo.position.x / ww - parseFloat(tileW / 2);
+        let y = 100 * cursorInfo.position.y / wh - parseFloat(tileH / 2);
+        console.log("xDiff, yDiff: ", xDiff, yDiff);
+        console.log("x, y: ", x, y);
+        console.log("left, top: ", s.left, s.top);
+        // let dropI = this.state.dropIndex;
+        if (ww > 800) {
           if (x < 0) {
             x = 0;
           }
@@ -140,7 +147,7 @@ class Game extends React.Component {
             y = 88.5;
           }
         } else {
-          if (window.innerWidth < 800) {
+          if (ww < 800) {
             if (x < 0) {
               x = 0;
             }
@@ -155,20 +162,18 @@ class Game extends React.Component {
             }
           }
         }
-        tilePos.push(x);
-        tilePos.push(y);
-        dropI = this.detectTileDrop(tilePos);
-        x = x.toString() + "vw";
-        y = y.toString() + "vh";
-        s.left = x;
-        s.top = y;
+        tilePos[0] = x; 
+        tilePos[1] = y;
+        // dropI = this.detectTileDrop(tilePos);
+        s.left = x.toString() + "vw";
+        s.top = y.toString() + "vh";
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
-          currentTilePos: tilePos,
-          dropIndex: dropI
+          currentTilePos: tilePos
+          // dropIndex: dropI
         });
-      }, 10),
+      }, 25),
     });
   };
 
@@ -191,8 +196,8 @@ class Game extends React.Component {
     let dropI = this.state.dropIndex;
     const x = arrXY[0];
     const y = arrXY[1];
-    const tileHalfWD = window.innerWidth > 800 ? 6 : 20; 
-    const tileHalfHT = 5;
+    const tileHalfWD = window.innerWidth > 800 ? 5.5 : 18.6; 
+    const tileHalfHT = 4.25;
     const padHalfWD = this.state.dropPadParams.width / 2;
     const padHalfHT = this.state.dropPadParams.height / 2;
     const normalDropPad = [
@@ -216,12 +221,12 @@ class Game extends React.Component {
    const boundsLen = window.innerWidth > 800 ? normalDropPad.length : mobileDropPad.length; // lens may not stay same in future
    let xyI = 0; // index into outer arr
    while (xyI < boundsLen) {
-     console.log("while loop did something at least!");
      let xBound = dropPad[xyI][0];
      let yBound = dropPad[xyI][1];
+    //  console.log("xBound, yBound: ", xBound, yBound);
      let xEdge = xBound + padHalfWD * 2;
      let yEdge = yBound + padHalfHT * 2;
-     console.log(x, y);
+    //  console.log("x, y from detectTileDrop(): ", x, y);
      if ((x - tileHalfWD >= xBound && x + tileHalfWD <= xEdge) && (y - tileHalfHT >= yBound && y + tileHalfHT <= yEdge)) {
        dropI = xyI;
        console.log("Inside pad!");

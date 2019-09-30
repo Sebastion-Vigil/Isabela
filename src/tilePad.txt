@@ -1,26 +1,32 @@
+***PAD DIMENSIONS***
 w > 800:      w < 800:
-tw: 12       tw: 40
-th: 10       th: 10
-tile one:    tile one:
+padW: 12       padW: 40
+padH: 10       padH: 10
+pad one:    pad one:
 left: 38     left: 10
 top: 17.7    top: 17.7
 
-tile two:    tile two: 
+pad two:    pad two: 
 left: 50.1   left: 50.1
 top: 17.7    top: 17.7
 
-tile three:  tile three:
+pad three:  pad three:
 left: 38     left: 10
 top: 27.8    top: 27.8
 
-tile four:   tile four:
+pad four:   pad four:
 left: 50.1   left: 50.1
 top: 27.8    top: 27.8
 
-tile five:   tile five:
+pad five:   pad five:
 left: 38     left: 10
 top: 37.9    top: 37.9
 
-tile six:    tile six:
+pad six:    pad six:
 left: 50.1   left: 50.1
 top: 37.9    top: 37.9
+
+***TILE DIMENSIONS***
+w > 800:    w < 800:
+tileW: 11   tileW: 37.2
+tileH: 8.5  tileH: 8.5

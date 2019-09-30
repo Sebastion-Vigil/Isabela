@@ -44,7 +44,7 @@ class App extends React.Component {
           }}
           how={250}
           time={20}
-          size={"50px"}
+          size={"100px"}
           background={"pink"}
         />
         <GameArea className="App">
@@ -64,9 +64,9 @@ class App extends React.Component {
               7: heart8,
               8: heart9
             }}
-            how={125}
+            how={250}
             time={20}
-            size={"25px"}
+            size={"75px"}
             background={"magenta"}
           />
         </div>
