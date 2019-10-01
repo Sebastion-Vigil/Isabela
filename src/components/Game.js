@@ -218,11 +218,14 @@ class Game extends React.Component {
     const dropPad = window.innerWidth > 800 ? normalDropPad : mobileDropPad;
     let i = 0;
     while (i < dropPad.length) {
-      if ((x > dropPad[i][0] && x + tileW < (dropPad[i][0] + padW)) && (y > dropPad[i][1] && y + tileH < dropPad[i][1] + padH)) {
-        console.log("TILE ON A PAD!!!");
+      let Px = dropPad[i][0];
+      let Py = dropPad[i][1];
+      if ((x >= Px) && (x + tileW <= Px + padW) && (y >= Py) && (y + tileH <= Py + padH)) {
         dropI = i;
+        console.log("TILE INSIDE PAD!!!");
         break;
       }
+      i += 1;
     }
     return dropI;
   };
