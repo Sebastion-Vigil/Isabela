@@ -9,8 +9,8 @@ class Tray extends React.Component {
     return (
       <div className="tray">
         <div className="tray-row">
-          <div className="octet left">Isabela</div>
-          <div className="octet right">te quiero</div>
+          <div className="octet left">Te</div>
+          <div className="octet right">quiero</div>
         </div>
         <div className="tray-row">
           <div className="octet left">con</div>
