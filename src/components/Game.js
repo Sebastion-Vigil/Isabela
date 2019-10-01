@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 // https://stackoverflow.com/questions/40510560/setinterval-with-setstate-in-react
 
-import Screen from "./Screen.js";
-import CheatScreen from "./CheatScreen.js";
-import CheatButton from "./CheatButton.js";
-import Tray from "./Tray.js";
-import Tile from "./Tile.js";
+import Screen from './Screen.js';
+import CheatScreen from './CheatScreen.js';
+import CheatButton from './CheatButton.js';
+import Tray from './Tray.js';
+import Tile from './Tile.js';
 
-import "../css/Game.css";
+import '../css/Game.css';
 
 // images -> try to clean up put all in '.' & try 2 import
-import isa1 from "../images/isa1.png";
-import isa2 from "../images/isa2.png";
-import isa3 from "../images/isa3.png";
-import isa4 from "../images/isa4.png";
-import isa5 from "../images/isa5.png";
-import isa6 from "../images/isa6.png";
+import isa1 from '../images/isa1.png';
+import isa2 from '../images/isa2.png';
+import isa3 from '../images/isa3.png';
+import isa4 from '../images/isa4.png';
+import isa5 from '../images/isa5.png';
+import isa6 from '../images/isa6.png';
 
 class Game extends React.Component {
   constructor(props) {
@@ -45,10 +45,10 @@ class Game extends React.Component {
 
   toggleHelpButton = () => {
     const toggled = !this.state.cheat;
-    console.log("winWidth: ", window.innerWidth);
-    console.log("winHeight: ", window.innerHeight);
-    console.log("state from toggle: ", this.state);
-    console.log("cursor props: ", this.props);
+    console.log('winWidth: ', window.innerWidth);
+    console.log('winHeight: ', window.innerHeight);
+    console.log('state from toggle: ', this.state);
+    console.log('cursor props: ', this.props);
     this.setState({
       cheat: toggled,
     });
@@ -68,12 +68,12 @@ class Game extends React.Component {
     while (randomIs.length > 1) {
       let rIndex = this.randTileIndex(0, randomIs.length - 1);
       let s = {
-        width: tileW.toString() + "vw",
-        height: tileH.toString() + "vh",
-        left: l.toString() + "vw",
-        top: t.toString() + "vh",
-        backgroundImage: "url(" + imgs[randomIs[rIndex]] + ")",
-        backgroundSize: "100% 100%",
+        width: tileW.toString() + 'vw',
+        height: tileH.toString() + 'vh',
+        left: l.toString() + 'vw',
+        top: t.toString() + 'vh',
+        backgroundImage: 'url(' + imgs[randomIs[rIndex]] + ')',
+        backgroundSize: '100% 100%',
       };
       randomizedTileStyles.push(s);
       if (randomizedTileStyles.length % 2 === 0 && ww > 800) {
@@ -88,12 +88,12 @@ class Game extends React.Component {
       randomIs.splice(rIndex, 1);
     } // come back and adjust final style later
     const finalStyle = {
-      width: tileW.toString() + "vw",
-      height: tileH.toString() + "vh",
-      left: ww > 800 ? "50.9vw" : "49.3vw",
-      top: "88.6vh",
-      backgroundImage: "url(" + imgs[randomIs[0]] + ")",
-      backgroundSize: "100% 100%",
+      width: tileW.toString() + 'vw',
+      height: tileH.toString() + 'vh',
+      left: ww > 800 ? '50.9vw' : '49.3vw',
+      top: '88.6vh',
+      backgroundImage: 'url(' + imgs[randomIs[0]] + ')',
+      backgroundSize: '100% 100%',
     };
     randomizedTileStyles.push(finalStyle);
     this.setState({
@@ -107,7 +107,7 @@ class Game extends React.Component {
 
   handleDragStart = style => {
     const borderedStyle = JSON.parse(JSON.stringify(style));
-    borderedStyle.border = "2px solid red";
+    borderedStyle.border = '2px solid red';
     this.setState({
       dragTimer: setInterval(() => {
         const ww = window.innerWidth; // these are px
@@ -120,7 +120,7 @@ class Game extends React.Component {
         const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
         const cursorInfo = this.props;
         const tilePos = JSON.parse(JSON.stringify(this.state.currentTilePos)); // ([x, y])
-        s.left = tilePos[0]; 
+        s.left = tilePos[0];
         s.top = tilePos[1];
         let dropI = this.state.dropIndex;
         // wuz trying 2 make better and stuff --> will cum back after
@@ -130,8 +130,8 @@ class Game extends React.Component {
         // const yDivisor = 1 / yCent;
         // const xDiff = parseFloat(tileW / xDivisor);
         // const yDiff = parseFloat(tileH / yDivisor);
-        let x = 100 * cursorInfo.position.x / ww - tileW / 2;
-        let y = 100 * cursorInfo.position.y / wh - tileH / 2;
+        let x = (100 * cursorInfo.position.x) / ww - tileW / 2;
+        let y = (100 * cursorInfo.position.y) / wh - tileH / 2;
         if (ww > 800) {
           if (x < 0) {
             x = 0;
@@ -161,16 +161,24 @@ class Game extends React.Component {
             }
           }
         }
-        tilePos[0] = x; 
+        tilePos[0] = x;
         tilePos[1] = y;
         dropI = this.detectTileDrop(tilePos); // this is a comment
-        s.left = x.toString() + "vw";
-        s.top = y.toString() + "vh";
+        const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
+        if (dropI !== undefined) {
+          console.log("HERE IS dropI: ", dropI);
+          const wordToTheTrizzle = JSON.parse(JSON.stringify(dropStyles[dropI]));
+          wordToTheTrizzle.border = '.004em dotted red';
+          dropStyles[dropI] = wordToTheTrizzle;
+        }
+        s.left = x.toString() + 'vw';
+        s.top = y.toString() + 'vh';
         rendered[tileIndex] = s;
         this.setState({
           renderedTiles: rendered,
           currentTilePos: tilePos,
-          dropIndex: dropI
+          dropIndex: dropI,
+          dropPadStyles: dropStyles
         });
       }, 25),
     });
@@ -183,14 +191,15 @@ class Game extends React.Component {
 
     const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
-    dragEndStyle.border = "";
+    dragEndStyle.border = '';
     rendered[tileIndex] = dragEndStyle;
     this.setState({
       renderedTiles: rendered,
     });
   };
 
-  detectTileDrop = (arrXY) => { // pass changed tilePos[] before dragTimer setState()
+  detectTileDrop = arrXY => {
+    // pass changed tilePos[] before dragTimer setState()
     // return index of pad with tile inside it -> will use in handleDragStart()
     let dropI = this.state.dropIndex;
     const x = arrXY[0]; // left (x)
@@ -206,7 +215,7 @@ class Game extends React.Component {
       [38, 27.8],
       [50.1, 27.8],
       [38, 37.9],
-      [50.1, 37.9]
+      [50.1, 37.9],
     ];
     const mobileDropPad = [
       [10, 17.7],
@@ -214,16 +223,21 @@ class Game extends React.Component {
       [10, 27.8],
       [50.1, 27.8],
       [10, 37.9],
-      [50.1, 37.9]
-    ];  
+      [50.1, 37.9],
+    ];
     const dropPad = window.innerWidth > 800 ? normalDropPad : mobileDropPad;
     let i = 0;
     while (i < dropPad.length) {
       let Px = dropPad[i][0];
       let Py = dropPad[i][1];
-      if ((x >= Px) && (x + tileW <= Px + padW) && (y >= Py) && (y + tileH <= Py + padH)) {
+      if (
+        x >= Px &&
+        x + tileW <= Px + padW &&
+        y >= Py &&
+        y + tileH <= Py + padH
+      ) {
         dropI = i;
-        console.log("TILE INSIDE PAD!!!");
+        console.log('TILE INSIDE PAD!!!');
         break;
       }
       i += 1;
@@ -239,16 +253,16 @@ class Game extends React.Component {
     let sStore = [];
     for (let i = 0; i < 6; i++) {
       sStore.push({
-        height: h.toString() + "vh",
-        width: w.toString() + "vw",
-        left: l.toString() + "vw",
-        top: t.toString() + "vh",
-        border: ".003em dashed pink",
+        height: h.toString() + 'vh',
+        width: w.toString() + 'vw',
+        left: l.toString() + 'vw',
+        top: t.toString() + 'vh',
+        border: '.003em dashed pink',
       });
       l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1;
       t = sStore.length % 2 === 0 ? t + h + 0.1 : t;
     }
-    window.addEventListener("contextmenu", function(e) {
+    window.addEventListener('contextmenu', function(e) {
       e.preventDefault();
     });
     this.randomTileGenerator();
