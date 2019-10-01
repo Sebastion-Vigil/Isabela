@@ -129,8 +129,8 @@ class Game extends React.Component {
         const xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
         const xDivisor = 1 / xCent;
         const yDivisor = 1 / yCent;
-        let x = 100 * cursorInfo.position.x / ww;
-        let y = 100 * cursorInfo.position.y / wh;
+        let x = 100 * cursorInfo.position.x / ww - tileW / 2;
+        let y = 100 * cursorInfo.position.y / wh - tileH / 2;
         const xDiff = parseFloat(tileW / xDivisor);
         const yDiff = parseFloat(tileH / yDivisor);
         console.log("xCent, yCent: ", xCent, yCent);
