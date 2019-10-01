@@ -123,6 +123,7 @@ class Game extends React.Component {
         s.left = tilePos[0]; 
         s.top = tilePos[1];
         let dropI = this.state.dropIndex;
+        // wuz trying 2 make better and stuff --> will cum back after
         // const yCent = (100 * cursorInfo.position.y / wh - parseFloat(s.top)) / parseFloat(tileH);
         // const xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
         // const xDivisor = 1 / xCent;
@@ -162,7 +163,7 @@ class Game extends React.Component {
         }
         tilePos[0] = x; 
         tilePos[1] = y;
-        dropI = this.detectTileDrop(tilePos);
+        dropI = this.detectTileDrop(tilePos); // this is a comment
         s.left = x.toString() + "vw";
         s.top = y.toString() + "vh";
         rendered[tileIndex] = s;
