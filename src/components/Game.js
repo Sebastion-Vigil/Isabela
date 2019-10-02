@@ -163,10 +163,15 @@ class Game extends React.Component {
         }
         tilePos[0] = x;
         tilePos[1] = y;
+        // so what was dropI before and afer?? that is what I need to figure out...
         dropI = this.detectTileDrop(tilePos); // this is a comment
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
-        if (dropI !== undefined) {
-          console.log("HERE IS dropI: ", dropI);
+        if (isNaN(dropI)) {
+          console.log("Not a number!");
+          dropStyles.forEach((s) => {
+            s.border = '.003em dashed pink';
+          });
+        } else {
           const wordToTheTrizzle = JSON.parse(JSON.stringify(dropStyles[dropI]));
           wordToTheTrizzle.border = '.004em dotted red';
           dropStyles[dropI] = wordToTheTrizzle;
