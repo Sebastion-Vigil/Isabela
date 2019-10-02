@@ -164,17 +164,18 @@ class Game extends React.Component {
         tilePos[0] = x;
         tilePos[1] = y;
         // so what was dropI before and afer?? that is what I need to figure out...
-        dropI = this.detectTileDrop(tilePos); // this is a comment
+        const prevDropI = dropI;
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
-        if (isNaN(dropI)) {
-          console.log("Not a number!");
-          dropStyles.forEach((s) => {
-            s.border = '.003em dashed pink';
-          });
-        } else {
-          const wordToTheTrizzle = JSON.parse(JSON.stringify(dropStyles[dropI]));
-          wordToTheTrizzle.border = '.004em dotted red';
-          dropStyles[dropI] = wordToTheTrizzle;
+        dropI = this.detectTileDrop(tilePos); // this is a comment
+        if (prevDropI && prevDropI !== dropI) {
+          const tileLeave = JSON.parse(JSON.stringify(this.state.dropPadStyles[prevDropI]));
+          tileLeave.border = '.003em dashed pink';
+          dropStyles[prevDropI] = tileLeave;
+        }
+        if (!isNaN(dropI)) {
+          const tileOver = JSON.parse(JSON.stringify(dropStyles[dropI]));
+          tileOver.border = '.004em dotted red';
+          dropStyles[dropI] = tileOver;
         }
         s.left = x.toString() + 'vw';
         s.top = y.toString() + 'vh';
@@ -242,7 +243,6 @@ class Game extends React.Component {
         y + tileH <= Py + padH
       ) {
         dropI = i;
-        console.log('TILE INSIDE PAD!!!');
         break;
       }
       i += 1;
