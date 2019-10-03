@@ -168,14 +168,21 @@ class Game extends React.Component {
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
         dropI = this.detectTileDrop(tilePos); // this is a comment
         if (prevDropI && prevDropI !== dropI) {
-          const tileLeave = JSON.parse(JSON.stringify(this.state.dropPadStyles[prevDropI]));
+          const tileLeave = JSON.parse(
+            JSON.stringify(this.state.dropPadStyles[prevDropI])
+          );
           tileLeave.border = '.003em dashed pink';
           dropStyles[prevDropI] = tileLeave;
         }
         if (!isNaN(dropI)) {
           const tileOver = JSON.parse(JSON.stringify(dropStyles[dropI]));
-          tileOver.border = '.004em dotted red';
+          tileOver.border = '.050em solid magenta';
           dropStyles[dropI] = tileOver;
+        }
+        if (prevDropI === 0 && prevDropI !== dropI) {
+          const tileOver = JSON.parse(JSON.stringify(dropStyles[prevDropI]));
+          tileOver.border = '.004em dashed pink';
+          dropStyles[prevDropI] = tileOver;
         }
         s.left = x.toString() + 'vw';
         s.top = y.toString() + 'vh';
@@ -184,7 +191,7 @@ class Game extends React.Component {
           renderedTiles: rendered,
           currentTilePos: tilePos,
           dropIndex: dropI,
-          dropPadStyles: dropStyles
+          dropPadStyles: dropStyles,
         });
       }, 25),
     });
@@ -207,7 +214,7 @@ class Game extends React.Component {
   detectTileDrop = arrXY => {
     // pass changed tilePos[] before dragTimer setState()
     // return index of pad with tile inside it -> will use in handleDragStart()
-    let dropI = this.state.dropIndex;
+    let dropI = undefined;
     const x = arrXY[0]; // left (x)
     const y = arrXY[1]; // top (y)
     const padW = this.state.dropPadParams.width;
