@@ -123,7 +123,7 @@ class Game extends React.Component {
         s.left = tilePos[0];
         s.top = tilePos[1];
         let dropI = this.state.dropIndex;
-        // wuz trying 2 make better and stuff --> will cum back after
+        // word to the mother fucking trizzle; gonna make better 'n stuff
         // const yCent = (100 * cursorInfo.position.y / wh - parseFloat(s.top)) / parseFloat(tileH);
         // const xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
         // const xDivisor = 1 / xCent;
@@ -206,6 +206,18 @@ class Game extends React.Component {
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
     dragEndStyle.border = '';
     rendered[tileIndex] = dragEndStyle;
+    const tilePos = this.state.currentTilePos;
+    const dropI = this.detectTileDrop(tilePos);
+    const dropStyles = this.state.dropPadStyles;
+    if (dropI) {
+
+    }
+    // need i of drop pad
+    // if i then change style of drop pad to placed
+    // remove absolute pos and center in dropPad
+    // prob need another boolean 2 check if all pads full
+    // here is where also check if all drop pads filled
+    // if so, check if in order 0 - 5, return win/lose message to user
     this.setState({
       renderedTiles: rendered,
     });
