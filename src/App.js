@@ -53,7 +53,7 @@ class App extends React.Component {
         </GameArea>
         <div className="sky-tray-wrapper">
           <Sky
-            className="tray-sky"
+            className="sky-tray"
             images={{
               0: heart1,
               1: heart2,

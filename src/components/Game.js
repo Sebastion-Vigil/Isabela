@@ -123,13 +123,6 @@ class Game extends React.Component {
         s.left = tilePos[0];
         s.top = tilePos[1];
         let dropI = this.state.dropIndex;
-        // word to the mother fucking trizzle; gonna make better 'n stuff
-        // const yCent = (100 * cursorInfo.position.y / wh - parseFloat(s.top)) / parseFloat(tileH);
-        // const xCent = (100 * cursorInfo.position.x / ww - parseFloat(s.left)) / parseFloat(tileW);
-        // const xDivisor = 1 / xCent;
-        // const yDivisor = 1 / yCent;
-        // const xDiff = parseFloat(tileW / xDivisor);
-        // const yDiff = parseFloat(tileH / yDivisor);
         let x = (100 * cursorInfo.position.x) / ww - tileW / 2;
         let y = (100 * cursorInfo.position.y) / wh - tileH / 2;
         if (ww > 800) {
@@ -166,7 +159,7 @@ class Game extends React.Component {
         // so what was dropI before and afer?? that is what I need to figure out...
         const prevDropI = dropI;
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles));
-        dropI = this.detectTileDrop(tilePos); // this is a comment
+        dropI = this.detectTileDrop(tilePos); // returns index # or undefined
         if (prevDropI && prevDropI !== dropI) {
           const tileLeave = JSON.parse(
             JSON.stringify(this.state.dropPadStyles[prevDropI])
