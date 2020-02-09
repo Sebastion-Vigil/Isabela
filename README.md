@@ -46,7 +46,7 @@
 
 - ~~Randomize tile generation~~ 
 - ~~Make game responsive/mobile-friendly~~
-- Make landing pad responsive to tile hovering over and/or placed inside
+- ~~Make landing pad responsive to tile hovering over and/or placed inside~~
 - Have game check when landing pad filled and return win or lose message to user  
   
 
