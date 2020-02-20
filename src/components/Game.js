@@ -122,7 +122,6 @@ class Game extends React.Component {
         const tilePos = JSON.parse(JSON.stringify(this.state.currentTilePos)) // ([x, y])
         s.left = tilePos[0]
         s.top = tilePos[1]
-        let dropI = this.state.dropIndex
         let x = (100 * cursorInfo.position.x) / ww - tileW / 2
         let y = (100 * cursorInfo.position.y) / wh - tileH / 2
         if (ww > 800) {
@@ -156,21 +155,18 @@ class Game extends React.Component {
         }
         tilePos[0] = x
         tilePos[1] = y
-        // so what was dropI before and afer?? that is what I need to figure out...
-        const prevDropI = dropI
-        dropI = this.detectTileDrop(tilePos)
+        const prevDropI = this.state.dropIndex
+        const dropI = this.detectTileDrop(tilePos)
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
-        if ((prevDropI && prevDropI !== dropI) || (prevDropI === 0 && prevDropI !== dropI)) {
-          const tileLeave = JSON.parse(
-            JSON.stringify(this.state.dropPadStyles[prevDropI])
-          )
-          tileLeave.border = '.004em dashed pink'
-          dropStyles[prevDropI] = tileLeave
-        }
         if (!isNaN(dropI)) {
-          const tileOver = JSON.parse(JSON.stringify(dropStyles[dropI]))
+          const tileOver = dropStyles[dropI]
           tileOver.border = '.050em solid magenta'
           dropStyles[dropI] = tileOver
+        }
+        if (!isNaN(prevDropI) && prevDropI !== dropI) {
+          const tileLeave = dropStyles[prevDropI]
+          tileLeave.border = '.004em dashed pink'
+          dropStyles[prevDropI] = tileLeave
         }
         s.left = x.toString() + 'vw'
         s.top = y.toString() + 'vh'
@@ -197,16 +193,14 @@ class Game extends React.Component {
     const tilePos = this.state.currentTilePos
     const dropI = this.detectTileDrop(tilePos)
     const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
-    if (dropI) {
+    if (!isNaN(dropI)) {
+     const tileOver = dropStyles[dropI]
+     tileOver.border = '.050em solid black'
+     dropStyles[dropI] = tileOver
     }
-    // need i of drop pad
-    // if i then change style of drop pad to placed
-    // remove absolute pos and center in dropPad
-    // prob need another boolean 2 check if all pads full
-    // here is where also check if all drop pads filled
-    // if so, check if in order 0 - 5, return win/lose message to user
     this.setState({
-      renderedTiles: rendered
+      renderedTiles: rendered,
+      dropPadStyles: dropStyles
     })
   }
 
@@ -268,6 +262,7 @@ class Game extends React.Component {
         width: w.toString() + 'vw',
         left: l.toString() + 'vw',
         top: t.toString() + 'vh',
+        // every time after component mounts dropPad borders turn back to pink
         border: '.003em dashed pink'
       })
       l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1
@@ -329,66 +324,3 @@ class Game extends React.Component {
 }
 
 export default Game
-
-// Game.js needs to programmatically generate the 24 tiles
-// so first we need to store the 24 image urls somewhere
-// tile dimensions:
-// height: 8.5%
-// width: 10.5%
-// first tile x/y coordinates:
-// x(left): 6.5%
-// y(top): 71.5%
-// space (between tiles): to be determined
-// so for top row the next tile would need to:
-// increase x by width + space
-// and to drop down a row it would need to:
-// increase y by height + space
-// pretty sure this needs to be on a lifecycle method
-// since the tiles do need to show up with the rest of
-// the app lol
-// now that I think about it wouldn't it be cool to use a timer
-// to make the tiles appear slowly in front of the user?
-
-// flirtingWithProps = () => {
-//     const miAmor = this.props;
-//     console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
-//     console.log('elementDimensions: ', miAmor.elementDimensions);
-//     console.log('isActive: ', miAmor.isActive);
-//     console.log('isPositionOutside: ', miAmor.isPositionOutside);
-//     console.log('position: ', miAmor.position);
-//     console.log('In all her beauty: ', miAmor);
-//   };
-
-// handleDragStart = (style) => {
-//   const dragStartStyle = JSON.parse(JSON.stringify(style));
-//   const img = dragStartStyle.backgroundImage;
-//   const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles));
-//   const tileIndex = rendered.findIndex(x => x.backgroundImage === img);
-//   dragStartStyle.border = "2px solid red";
-//   rendered[tileIndex] = dragStartStyle;
-//   this.setState({
-//     renderedTiles: rendered
-//   });
-// }
-
-//  flirtingWithProps = () => {
-//     const miAmor = this.props;
-//     console.log('detectedEnvironment: ', miAmor.detectedEnvironment);
-//     console.log('elementDimensions: ', miAmor.elementDimensions);
-//     console.log('isActive: ', miAmor.isActive);
-//     console.log('isPositionOutside: ', miAmor.isPositionOutside);
-//     console.log('position: ', miAmor.position);
-//     console.log('In all her beauty: ', miAmor);
-//   };
-
-// from detectTileDrop():
-// let dropAreaI = undefined;
-//     for (let i = 0; i < 6; i++) {
-//       if (x >= left && x <= left + tileW && (y >= top && y <= top + tileH)) {
-//         dropAreaI = i;
-//         break;
-//       }
-//       left = (i + 1) % 2 === 0 ? leftReset : left + tileW + space;
-//       top = (i + 1) % 2 === 0 ? top + tileH + space : 17.7;
-//     }
-//     return dropAreaI;
