@@ -187,7 +187,6 @@ class Game extends React.Component {
     const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles))
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img)
     // dragEndStyle.border = '1px solid blue'
-    dragEndStyle.visibility = 'hidden'
     rendered[tileIndex] = dragEndStyle
     const tilePos = this.state.currentTilePos
     const dropI = this.detectTileDrop(tilePos)
@@ -198,6 +197,7 @@ class Game extends React.Component {
      tileOver.backgroundImage = img
      tileOver.backgroundSize = '100% 100%'
      dropStyles[dropI] = tileOver
+     dragEndStyle.visibility = 'hidden'
     }
     this.setState({
       renderedTiles: rendered,
