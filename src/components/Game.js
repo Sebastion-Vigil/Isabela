@@ -157,16 +157,18 @@ class Game extends React.Component {
         const prevDropI = this.state.dropIndex
         const dropI = this.detectTileDrop(tilePos)
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
-        // if (!isNaN(dropI)) {
-        //   const tileOver = dropStyles[dropI]
-        //   tileOver.border = '.050em solid magenta'
-        //   dropStyles[dropI] = tileOver
-        // }
-        // if (!isNaN(prevDropI) && prevDropI !== dropI) {
-        //   const tileLeave = dropStyles[prevDropI]
-        //   tileLeave.border = '.004em dashed pink'
-        //   dropStyles[prevDropI] = tileLeave
-        // }
+        if (!isNaN(dropI)) {
+          const tileOver = dropStyles[dropI]
+          tileOver.border = '.1em solid magenta'
+          dropStyles[dropI] = tileOver
+        }
+        if (!isNaN(prevDropI) && prevDropI !== dropI) {
+          const tileLeave = dropStyles[prevDropI]
+          if (tileLeave.border !== '.050em solid silver') {
+            tileLeave.border = '.004em dashed pink'
+          }
+          dropStyles[prevDropI] = tileLeave
+        }
         s.left = x.toString() + 'vw'
         s.top = y.toString() + 'vh'
         rendered[tileIndex] = s
@@ -186,20 +188,19 @@ class Game extends React.Component {
     const img = dragEndStyle.backgroundImage
     const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles))
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img)
-    // dragEndStyle.border = '1px solid blue'
     rendered[tileIndex] = dragEndStyle
     const tilePos = this.state.currentTilePos
     const dropI = this.detectTileDrop(tilePos)
     const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
     if (!isNaN(dropI)) {
-     const tileOver = dropStyles[dropI]
-     if (!tileOver.backgroundImage) {
-      tileOver.border = '.050em solid black'
-      tileOver.backgroundImage = img
-      tileOver.backgroundSize = '100% 100%'
-      dragEndStyle.visibility = 'hidden'
-     }
-     dropStyles[dropI] = tileOver
+      const tileOver = dropStyles[dropI]
+      if (!tileOver.backgroundImage) {
+        tileOver.border = '.050em solid silver'
+        tileOver.backgroundImage = img
+        tileOver.backgroundSize = '100% 100%'
+        dragEndStyle.visibility = 'hidden'
+      }
+      dropStyles[dropI] = tileOver
     }
     this.setState({
       renderedTiles: rendered,
