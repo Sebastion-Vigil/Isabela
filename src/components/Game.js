@@ -38,7 +38,6 @@ class Game extends React.Component {
       randomIs: [0, 1, 2, 3, 4, 5],
       renderedTiles: [], // randomly put 'em (styles) in an array to map out in render()
       currentTilePos: [window.innerWidth > 800 ? 37.9 : 10.1, 67], // x, y position of tile being dragged
-      tileDown: false, // is tile set in a pad?
       tileImages: [isa1, isa2, isa3, isa4, isa5, isa6]
     }
   }
@@ -158,16 +157,16 @@ class Game extends React.Component {
         const prevDropI = this.state.dropIndex
         const dropI = this.detectTileDrop(tilePos)
         const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
-        if (!isNaN(dropI)) {
-          const tileOver = dropStyles[dropI]
-          tileOver.border = '.050em solid magenta'
-          dropStyles[dropI] = tileOver
-        }
-        if (!isNaN(prevDropI) && prevDropI !== dropI) {
-          const tileLeave = dropStyles[prevDropI]
-          tileLeave.border = '.004em dashed pink'
-          dropStyles[prevDropI] = tileLeave
-        }
+        // if (!isNaN(dropI)) {
+        //   const tileOver = dropStyles[dropI]
+        //   tileOver.border = '.050em solid magenta'
+        //   dropStyles[dropI] = tileOver
+        // }
+        // if (!isNaN(prevDropI) && prevDropI !== dropI) {
+        //   const tileLeave = dropStyles[prevDropI]
+        //   tileLeave.border = '.004em dashed pink'
+        //   dropStyles[prevDropI] = tileLeave
+        // }
         s.left = x.toString() + 'vw'
         s.top = y.toString() + 'vh'
         rendered[tileIndex] = s
@@ -185,10 +184,10 @@ class Game extends React.Component {
     clearInterval(this.state.dragTimer)
     const dragEndStyle = JSON.parse(JSON.stringify(style))
     const img = dragEndStyle.backgroundImage
-
     const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles))
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img)
-    dragEndStyle.border = '1px solid blue'
+    // dragEndStyle.border = '1px solid blue'
+    dragEndStyle.visibility = 'hidden'
     rendered[tileIndex] = dragEndStyle
     const tilePos = this.state.currentTilePos
     const dropI = this.detectTileDrop(tilePos)
@@ -196,6 +195,8 @@ class Game extends React.Component {
     if (!isNaN(dropI)) {
      const tileOver = dropStyles[dropI]
      tileOver.border = '.050em solid black'
+     tileOver.backgroundImage = img
+     tileOver.backgroundSize = '100% 100%'
      dropStyles[dropI] = tileOver
     }
     this.setState({
@@ -257,12 +258,12 @@ class Game extends React.Component {
     let t = this.state.dropPadParams.top
     let sStore = []
     for (let i = 0; i < 6; i++) {
+      // these are the droppad styles
       sStore.push({
         height: h.toString() + 'vh',
         width: w.toString() + 'vw',
         left: l.toString() + 'vw',
         top: t.toString() + 'vh',
-        // every time after component mounts dropPad borders turn back to pink
         border: '.003em dashed pink'
       })
       l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1
