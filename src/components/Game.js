@@ -193,11 +193,13 @@ class Game extends React.Component {
     const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
     if (!isNaN(dropI)) {
      const tileOver = dropStyles[dropI]
-     tileOver.border = '.050em solid black'
-     tileOver.backgroundImage = img
-     tileOver.backgroundSize = '100% 100%'
+     if (!tileOver.backgroundImage) {
+      tileOver.border = '.050em solid black'
+      tileOver.backgroundImage = img
+      tileOver.backgroundSize = '100% 100%'
+      dragEndStyle.visibility = 'hidden'
+     }
      dropStyles[dropI] = tileOver
-     dragEndStyle.visibility = 'hidden'
     }
     this.setState({
       renderedTiles: rendered,
