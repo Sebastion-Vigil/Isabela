@@ -21,8 +21,11 @@ class Game extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      winLose: undefined,
       tileTimer: undefined,
       dragTimer: undefined,
+      tilesDropped: 0,
+      droppedCorrectly: 0,
       left: window.innerWidth > 800 ? 37.9 : 10.1,
       top: 67,
       cheat: false,
@@ -40,6 +43,69 @@ class Game extends React.Component {
       currentTilePos: [window.innerWidth > 800 ? 37.9 : 10.1, 67], // x, y position of tile being dragged
       tileImages: [isa1, isa2, isa3, isa4, isa5, isa6]
     }
+    this.baseState = JSON.parse(JSON.stringify(this.state))
+  }
+
+  initializeGame = () => {
+    let h = this.state.dropPadParams.height
+    let w = this.state.dropPadParams.width
+    let l = this.state.dropPadParams.left
+    let t = this.state.dropPadParams.top
+    let sStore = []
+    for (let i = 0; i < 6; i++) {
+      // these are the droppad styles
+      sStore.push({
+        height: h.toString() + 'vh',
+        width: w.toString() + 'vw',
+        left: l.toString() + 'vw',
+        top: t.toString() + 'vh',
+        border: '.003em dashed pink'
+      })
+      l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1
+      t = sStore.length % 2 === 0 ? t + h + 0.1 : t
+    }
+    window.addEventListener('contextmenu', function (e) {
+      e.preventDefault()
+    })
+    this.randomTileGenerator()
+    this.setState({
+      dropPadStyles: sStore,
+      tileTimer: setInterval(() => {
+        const rIs = this.state.randomIs
+        let i = this.randTileIndex(0, rIs.length - 1)
+        let rendered = this.state.renderedTiles
+        if (rendered.length === 5) {
+          clearInterval(this.state.tileTimer)
+        }
+        rendered.push(this.state.styleStore[rIs[i]])
+        if (rIs.length > 1) {
+          rIs.splice(i, 1)
+        }
+        i = rIs.length > 1 ? this.randTileIndex(0, rIs.length - 1) : rIs[0]
+        this.setState({
+          renderedTiles: rendered,
+          storeIndex: i,
+          randomIs: rIs
+        })
+      }, 300)
+    })
+  }
+
+  resetGame = () => {
+    this.setState(this.baseState)
+  }
+
+  componentDidMount () {
+    this.initializeGame()
+  }
+
+  componentDidUpdate () {
+    if (this.state.tilesDropped === 6) {
+      const msg = this.state.droppedCorrectly === 6 ? "You won!" : "You lose! Try again!"
+      alert(msg)
+      this.resetGame()
+      this.initializeGame()
+    }
   }
 
   toggleHelpButton = () => {
@@ -48,6 +114,7 @@ class Game extends React.Component {
     console.log('winHeight: ', window.innerHeight)
     console.log('state from toggle: ', this.state)
     console.log('cursor props: ', this.props)
+    console.log('baseState: ', this.baseState)
     this.setState({
       cheat: toggled
     })
@@ -186,12 +253,17 @@ class Game extends React.Component {
     clearInterval(this.state.dragTimer)
     const dragEndStyle = JSON.parse(JSON.stringify(style))
     const img = dragEndStyle.backgroundImage
+    let isa = img.split('media/')[1]
+    isa = isa.split('.')[0]
+    isa = Number(isa.split('isa')[1])
     const rendered = JSON.parse(JSON.stringify(this.state.renderedTiles))
     const tileIndex = rendered.findIndex(x => x.backgroundImage === img)
     rendered[tileIndex] = dragEndStyle
     const tilePos = this.state.currentTilePos
     const dropI = this.detectTileDrop(tilePos)
     const dropStyles = JSON.parse(JSON.stringify(this.state.dropPadStyles))
+    let tilesDrppd = this.state.tilesDropped
+    let drppdCorrectly = this.state.droppedCorrectly
     if (!isNaN(dropI)) {
       const tileOver = dropStyles[dropI]
       if (!tileOver.backgroundImage) {
@@ -199,12 +271,18 @@ class Game extends React.Component {
         tileOver.backgroundImage = img
         tileOver.backgroundSize = '100% 100%'
         dragEndStyle.visibility = 'hidden'
+        tilesDrppd += 1
+      } // check if tile dropped on correct dropPad
+      if (isa === dropI + 1) {
+        drppdCorrectly += 1
       }
       dropStyles[dropI] = tileOver
     }
     this.setState({
       renderedTiles: rendered,
-      dropPadStyles: dropStyles
+      dropPadStyles: dropStyles,
+      tilesDropped: tilesDrppd,
+      droppedCorrectly: drppdCorrectly
     })
   }
 
@@ -252,51 +330,6 @@ class Game extends React.Component {
       i += 1
     }
     return dropI
-  }
-
-  componentDidMount () {
-    let h = this.state.dropPadParams.height
-    let w = this.state.dropPadParams.width
-    let l = this.state.dropPadParams.left
-    let t = this.state.dropPadParams.top
-    let sStore = []
-    for (let i = 0; i < 6; i++) {
-      // these are the droppad styles
-      sStore.push({
-        height: h.toString() + 'vh',
-        width: w.toString() + 'vw',
-        left: l.toString() + 'vw',
-        top: t.toString() + 'vh',
-        border: '.003em dashed pink'
-      })
-      l = sStore.length % 2 === 0 ? this.state.dropPadParams.left : l + w + 0.1
-      t = sStore.length % 2 === 0 ? t + h + 0.1 : t
-    }
-    window.addEventListener('contextmenu', function (e) {
-      e.preventDefault()
-    })
-    this.randomTileGenerator()
-    this.setState({
-      dropPadStyles: sStore,
-      tileTimer: setInterval(() => {
-        const rIs = this.state.randomIs
-        let i = this.randTileIndex(0, rIs.length - 1)
-        let rendered = this.state.renderedTiles
-        if (rendered.length === 5) {
-          clearInterval(this.state.tileTimer)
-        }
-        rendered.push(this.state.styleStore[rIs[i]])
-        if (rIs.length > 1) {
-          rIs.splice(i, 1)
-        }
-        i = rIs.length > 1 ? this.randTileIndex(0, rIs.length - 1) : rIs[0]
-        this.setState({
-          renderedTiles: rendered,
-          storeIndex: i,
-          randomIs: rIs
-        })
-      }, 300)
-    })
   }
 
   render () {
