@@ -102,9 +102,13 @@ class Game extends React.Component {
   componentDidUpdate () {
     if (this.state.tilesDropped === 6) {
       const msg = this.state.droppedCorrectly === 6 ? "You won!" : "You lose! Try again!"
-      alert(msg)
-      this.resetGame()
-      this.initializeGame()
+      setTimeout(() => {
+        alert(msg)
+      }, 1500)
+      setTimeout(() => {
+        this.resetGame()
+        this.initializeGame()
+      }, 2500)
     }
   }
 
