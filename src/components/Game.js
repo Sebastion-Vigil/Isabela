@@ -21,6 +21,7 @@ class Game extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      gameFinished: false,
       winLose: undefined,
       tileTimer: undefined,
       dragTimer: undefined,
@@ -100,13 +101,16 @@ class Game extends React.Component {
   }
 
   componentDidUpdate () {
-    if (this.state.tilesDropped === 6) {
+    if (this.state.tilesDropped === 6 && !this.state.gameFinished) {
       const msg = this.state.droppedCorrectly === 6 ? "You won!" : "You lose! Try again!"
       alert(msg)
       setTimeout(() => {
         this.resetGame()
         this.initializeGame()
       }, 1500)
+     this.setState({
+       gameFinished: true
+     })
     }
   }
 
